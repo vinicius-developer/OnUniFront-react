@@ -122,6 +122,7 @@ header {
 .box-two {
     width: 100%;
     background-color: #fdecec;
+    padding: 110px 0;
 }
 
 .box-two h1{
@@ -131,7 +132,88 @@ header {
 
 .box-cards {
     width: 1100px;
+    display: flex;
 }
+
+.box-cards article {
+    margin: 15px;
+    width: 350px;
+}
+
+.box-cards article img{
+    height: 80px;
+}
+
+.style-card-box-two h5{
+    color: #ec816c;
+    font-weight: bold;
+    font-size: 17px
+}
+
+.style-card-box-two p {
+    color: #404040;
+}
+
+.link-style {
+    color: blue !important;
+    text-decoration: underline;
+    transition: .5s;
+}
+
+.link-style:hover {
+    color: #ec816c !important;
+}
+
+.box-three {
+    padding: 110px 0;
+}
+
+.box-three img {
+    height: 425px;
+}
+
+.box-text-box-three {
+    width: 445px;
+}
+
+.box-text-box-three h3{
+    color: #ec816c;
+    font-size: 45px;
+}
+
+.box-four {
+    background-color: #fdecec;
+    width: 100%;
+    padding: 110px 0;
+}
+
+.box-four h1{
+    color: #ec816c;
+    font-size: 50px
+}
+
+.box-four p {
+    width: 400px;
+}
+
+.line-box-four {
+    width: 1100px;
+}
+
+.line-box-four article {
+    width: 225px;
+}
+
+.img-box-four{
+    width: 80px;
+    height: 80px;
+}
+
+.title-box-four {
+    color: #ec816c;
+    font-size: 16px;
+}
+
 
 footer {
 	background: #ec816c;
