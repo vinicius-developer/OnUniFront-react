@@ -6,28 +6,32 @@ class Header extends Component {
 	render() {
 		return (
 			<header className="container-fluid">
-				{this.props.itensNav != undefined & this.props.itensCad != undefined ?
+				{this.props.itensNav !== undefined & this.props.itensCad !== undefined ?
 					<div className="box-info-header d-flex justify-content-between align-items-center">
 						<div className="box-img">
-							<a href="listOngs.html">
+							<a href={'#' + this.props.firstPage}>
 								<img src={logo} alt="logo da OnUni" />
 							</a>
 						</div>
-						<div class="box-buttons">
+						<div className="box-buttons">
 							<nav>
 								<ul className="list-style-header">
-									{this.props.itensNav.map(itens => {
+									{this.props.itensNav.map((itens, index) => {
 										return (
-											<li><a href={'#' + itens.replace(' ', '').toLowerCase()}>{itens}</a></li>
+											<li key={index}>
+												<a href={'#' + itens.replace(' ', '').toLowerCase()}>{itens}</a>
+											</li>
 										) 
 									})}
 								</ul>
 							</nav>
 							<div className="cad-buttons">
 								<ul className="list-style-header">
-									{this.props.itensCad.map(itens => {
+									{this.props.itensCad.map((itens, index) => {
 										return (
-											<li><a href={'/authenticate/' + itens.toLowerCase()}>{itens}</a></li>
+											<li key={index}>
+												<a href={'/authenticate/' + itens.toLowerCase()}>{itens}</a>
+											</li>
 										)
 									})}
 								</ul>

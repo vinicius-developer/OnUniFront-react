@@ -6,10 +6,7 @@ function Footer() {
     return (
         <footer>
             <div className="footer-logo">
-                <img src={logo} />
-            </div>
-            <div className="box-logo-social">
-
+                <img src={logo} alt="logo da OnUni"/>
             </div>
         </footer>
     )
