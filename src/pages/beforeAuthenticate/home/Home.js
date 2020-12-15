@@ -3,29 +3,36 @@ import Header from '../default/Header'
 import Footer from '../default/Footer'
 
 /* BOX-ONE */
-
-import pothoBoxOne from '../../../images/box-one/imagemTresPessoas.svg'
+import pothoBoxOne from './images/box-one/imagemTresPessoas.svg'
 
 /* BOX-TWO */
-import vetorMeninaBlack from '../../../images/box-two/imagemMeninaBlack.svg'
-import vetorMeninaDread from '../../../images/box-two/imagemMeninaDread.svg'
-import vetorSenhor from '../../../images/box-two/vetorSenhor.svg'
+import vetorMeninaBlack from './images/box-two/imagemMeninaBlack.svg'
+import vetorMeninaDread from './images/box-two/imagemMeninaDread.svg'
+import vetorSenhor from './images/box-two/vetorSenhor.svg'
 
 /* BOX-THREE */
-import vetorMeninaLivro from '../../../images/box-three/imagemMeninaLivro.svg'
+import vetorMeninaLivro from './images/box-three/imagemMeninaLivro.svg'
 
 /* BOX-FOUR */
-import imgArvore from '../../../images/box-four/arvore.svg'
-import imgCachorro from '../../../images/box-four/cachorro.png'
-import imgCasa from '../../../images/box-four/casa.png'
-import imgComida from '../../../images/box-four/comida.png'
-import imgLapis from '../../../images/box-four/lapis.png'
-import imgMedicina from '../../../images/box-four/medicina.png'
-import imgRefugiados from '../../../images/box-four/refugiados.png'
-import imgWoman from '../../../images/box-four/woman.png'
+import imgArvore from './images/box-four/arvore.svg'
+import imgCachorro from './images/box-four/cachorro.png'
+import imgCasa from './images/box-four/casa.png'
+import imgComida from './images/box-four/comida.png'
+import imgLapis from './images/box-four/lapis.png'
+import imgMedicina from './images/box-four/medicina.png'
+import imgRefugiados from './images/box-four/refugiados.png'
+import imgWoman from './images/box-four/woman.png'
 
+/* BOX-FIVE */
+import estudantesPA from './images/box-five/estudantesPa.jpg'
+import noticiasVans from './images/box-five/vansTenis.jpg'
+import programaContraFome from './images/box-five/programaContraFome.jpg'
+
+/* CSS */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../main.css'
+import './css/styleHome.css'
+
 
 function App() {
 	return (
@@ -119,17 +126,57 @@ function App() {
 							</article>
 							<article className="card mx-2 py-4 d-flex flex-column align-items-center">
 								<img className="card-img-top img-box-four mb-4" src={imgRefugiados} alt="pai, mãe e filho no colo" />
-								<h5 className="card-title title-box-four text-center"></h5>
+								<h5 className="card-title title-box-four text-center">Refugiados</h5>
 							</article>
 							<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-								<img className="card-img-top img-box-four mb-4" src={imgComida} alt="Prato e talheres"/>
-								<h5 className="card-title title-box-four text-center">Tratamento Médico</h5>
+								<img className="card-img-top img-box-four mb-4" src={imgComida} alt="Prato e talheres" />
+								<h5 className="card-title title-box-four text-center">Doação de Alimentos</h5>
 							</article>
 							<article className="card mx-2 py-4 d-flex flex-column align-items-center">
 								<img className="card-img-top img-box-four mb-4" src={imgWoman} alt="Mulher" />
-								<h5 className="card-title title-box-four text-center">Proteção Animal</h5>
+								<h5 className="card-title title-box-four text-center">Violência Doméstica</h5>
 							</article>
 						</div>
+					</div>
+				</section>
+				<section id="artigos" className="box-five d-flex flex-column align-items-center">
+					<h1 className="text-center mb-3">Histórias de Sucesso</h1>
+					<p className="text-presentation-box-five text-center mb-5">Postamos aqui algumas ações tranformadores que ocorrem pelo mundo,
+					para que possam ser vistas pelo nossos usários </p>
+					<div className="box-five-articles d-flex ">
+						<article className="card mx-3">
+							<img src={noticiasVans} className="card-img-top" alt="Dois pés com tênis da marca Vans em cima de um amplificador" />
+							<div className="card-body d-flex flex-column justify-content-between">
+								<p className="card-text">Vans doará US$ 1 milhão para instituições que trabalham com saúde mental.</p>
+								<div className="d-flex justify-content-between align-items-end">
+									<span className="fs-6">06, novembro de 2020</span>
+									<a href="https://www.vans.com.br/?gclid=CjwKCAiAqJn9BRB0EiwAJ1SztdXm_urGdcdZcNDvmFRS5tSTc_WOQzrsXZO75uNjQzoxZjogITqAtBoCUfsQAvD_BwE"
+										className="link-style" target="_blank" rel="noreferrer">Leia Mais</a>
+								</div>
+							</div>
+						</article>
+						<article className="card mx-3">
+							<img src={programaContraFome} className="card-img-top" alt="Grande grupo de pessoas tirando foto para comemoração pelo sucesso do programa" />
+							<div className="card-body d-flex flex-column justify-content-between">
+								<p className="card-text">Prêmio Nobel da Paz 2020 vai para o maior programa contra a fome do mundo.</p>
+								<div className="d-flex justify-content-between align-items-end">
+									<span className="fs-6">14, outubro de 2020</span>
+									<a href="https://news.un.org/pt/tags/programa-mundial-de-alimentos"
+										className="link-style" target="_blank" rel="noreferrer">Leia Mais</a>
+								</div>
+							</div>
+						</article>
+						<article className="card mx-3">
+							<img src={estudantesPA} className="card-img-top" alt="Fotos de estudantes do Pará ao lado do projeto" />
+							<div className="card-body d-flex flex-column justify-content-between">
+								<p className="card-text">Estudantes do PA criam ecobarreira que impede plástico de chegar ao oceano.</p>
+								<div className="content-box-five d-flex justify-content-between align-items-end">
+									<span className="fs-6">11, setembro de 2020</span>
+									<a href="https://portal.ufpa.br/index.php/ultimas-noticias2/11439-novo-projeto-do-time-enactus-ufpa-conquista-reconhecimento-nacional"
+										className="link-style" target="_blank" rel="noreferrer">Leia Mais</a>
+								</div>
+							</div>
+						</article>
 					</div>
 				</section>
 			</div>

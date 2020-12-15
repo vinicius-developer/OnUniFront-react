@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import logo from '../../../images/logo/logo.svg'
+import logo from '../../../imagesDefault/logo/logo.svg'
 
 class Header extends Component {
 	render() {
