@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto:wght@400&display=swap');
 
+/* RESET */
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-/*
-*/
-
 body {
    font-family: 'Poppins', sans-serif; 
+}
+
+a{
+    cursor: pointer;
 }
 
 a:link {
@@ -37,6 +40,10 @@ ul {
     margin-bottom: 0;
 }
 
+button {
+    outline: none;
+}
+
 header {
     background-color: #7BB29B;
     position: fixed;
@@ -46,6 +53,7 @@ header {
     -moz-box-shadow:    5px 3px 22px 0px rgba(49, 50, 50, 0.36);
     box-shadow:         5px 3px 22px 0px rgba(49, 50, 50, 0.36);
     margin: 0 25%;
+    z-index: 1;
 }
 
 .box-info-header {
@@ -75,6 +83,10 @@ header {
     font-size: 18px;
 }
 
+.list-style-header li a{ 
+    cursor: pointer;
+}
+
 .box-buttons {
 	display: flex;
 }
@@ -85,6 +97,24 @@ header {
 
 .box-buttons .cad-buttons ul li{
 	font-weight: 200
+}
+
+.menu-smartphone {
+    display: none;
+}
+
+.button-menu-smartphone {
+    width: 40px;
+    height: 40px;
+    background-color:  #7BB29B;
+    border: none
+
+}
+
+.button-menu-smartphone img{
+    width: 30px;
+    height: 30px;
+
 }
 
 /* FOOTER */ 
@@ -99,6 +129,32 @@ footer {
 	justify-content: center;
 	align-items: center
 	
+}
+
+
+/* GERAL */
+
+.pe-auto {
+    cursor: pointer
+}
+
+.active {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+@media (max-width: 1100px) {
+    .box-buttons {
+        display: none;
+    }
+
+    .menu-smartphone {
+        display: block;
+    }
+
+    .box-info-header {
+        width: 100%;
+    }
 }
 
 

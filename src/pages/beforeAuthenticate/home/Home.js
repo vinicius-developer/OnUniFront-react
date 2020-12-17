@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-scroll'
 import Header from '../default/Header'
 import Footer from '../default/Footer'
 
@@ -181,6 +182,40 @@ function App() {
 				</section>
 			</div>
 			<Footer />
+			<div id="modalMenuSmartphone" className="modal-smartphone">
+				<aside className="aside-navbar-menu-smartphone d-flex 
+				align-items-center flex-column">
+					<ul className="list-menu-smartphone mt-5">
+						<li>
+							<Link to={'oprojeto'} spy={true} smooth={true} duration={500}>
+								O Projeto
+							</Link>
+						</li>
+						<li>
+							<Link to={'causas'} spy={true} smooth={true} duration={500}>
+								Causas
+							</Link>
+						</li>
+						<li>
+							<Link to={'artigos'} spy={true} smooth={true} duration={500}>
+								Artigos
+							</Link>
+						</li>
+					</ul>
+					<ul className="list-menu-smartphone mt-3 text-white">
+						<li>
+							<a>
+								Entrar
+							</a>
+						</li>
+						<li>
+							<a>
+								Cadastrar
+							</a>
+						</li>
+					</ul>
+				</aside>
+			</div>
 		</Fragment>
 	);
 }

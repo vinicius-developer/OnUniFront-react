@@ -1,6 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-scroll'
 
 import logo from '../../../imagesDefault/logo/logo.svg'
+
+import menu from '../../../imagesDefault/utils-icons/menu.svg'
 
 class Header extends Component {
 	render() {
@@ -9,9 +12,9 @@ class Header extends Component {
 				{this.props.itensNav !== undefined & this.props.itensCad !== undefined ?
 					<div className="box-info-header d-flex justify-content-between align-items-center">
 						<div className="box-img">
-							<a href={'#' + this.props.firstPage}>
+							<Link className="pe-auto" to={this.props.firstPage} spy={true} smooth={true} duration={500}>
 								<img src={logo} alt="logo da OnUni" />
-							</a>
+							</Link>
 						</div>
 						<div className="box-buttons">
 							<nav>
@@ -19,9 +22,11 @@ class Header extends Component {
 									{this.props.itensNav.map((itens, index) => {
 										return (
 											<li key={index}>
-												<a href={'#' + itens.replace(' ', '').toLowerCase()}>{itens}</a>
+												<Link to={itens.replace(' ', '').toLowerCase()} spy={true} smooth={true} duration={500}>
+													{itens}
+												</Link>
 											</li>
-										) 
+										)
 									})}
 								</ul>
 							</nav>
@@ -35,7 +40,12 @@ class Header extends Component {
 										)
 									})}
 								</ul>
-							</div> 
+							</div>
+						</div>
+						<div className="menu-smartphone">
+							<button className="button-menu-smartphone">
+								<img src={menu} alt="três linhas na vertical para representar menu"/>
+							</button>
 						</div>
 					</div>
 					:

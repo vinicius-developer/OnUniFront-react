@@ -162,3 +162,36 @@
     height: 20px;
     font-size: 12px;
 }
+
+/* MODAl MENU SMARTPHONE */
+
+.modal-smartphone {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba( 0, 0, 0, .5);
+}
+
+.aside-navbar-menu-smartphone {
+    position: absolute;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color:#7BB29B;
+}
+
+.list-menu-smartphone {
+    width: 70%;
+    color: #ffffff; 
+}
+
+.list-menu-smartphone li {
+    margin: 20px 0;
+}
+
+
+.list-menu-smartphone li a:hover{
+    text-decoration: underline;
+}
