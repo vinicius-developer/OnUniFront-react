@@ -43,7 +43,7 @@ class Header extends Component {
 							</div>
 						</div>
 						<div className="menu-smartphone">
-							<button className="button-menu-smartphone">
+							<button className="button-menu-smartphone hidden-modal">
 								<img src={menu} alt="três linhas na vertical para representar menu"/>
 							</button>
 						</div>
