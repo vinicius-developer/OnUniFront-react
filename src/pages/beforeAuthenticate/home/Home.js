@@ -30,19 +30,141 @@ import noticiasVans from './images/box-five/vansTenis.jpg'
 import programaContraFome from './images/box-five/programaContraFome.jpg'
 
 /* CSS */
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../../main.css'
-import './css/styleHome.css'
+import styled from 'styled-components';
+
+const boxSize = '981px';
+const colorBackgroudBox = '#fdecec';
+
+const sizeMediaMd = '964px'
+const sizeMediaSm = '490px'
+const sizeMedia = '270px'
+
+
+const Wrapper = styled.div`
+	width: 100%;
+`
+
+/* BOX ONE */
+const BoxOne = styled.section`
+	width: ${boxSize};
+
+	h1 {
+		padding-top: 120px;
+    	font-size: 85px;
+		font-weight: bold;
+		line-height: 56px;
+		color: ${({ theme }) => theme.color.salmao};
+		
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 55px;'])}
+	}
+
+	h2 {
+		color: ${({ theme }) => theme.color.salmao};
+	 	font-size: 35px;
+    	font-style: bold;
+		width: 470px;
+		
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 20px;', 'width: 270px'])}
+	}
+
+	img {
+		width: 90%;
+	}
+
+	${({ theme }) => theme.media(sizeMediaMd, ['width: 100%;'])}
+`
+
+/* BOX-TWO */
+
+const BoxTwo = styled.section`
+	width: 100%;
+	background-color: ${colorBackgroudBox};
+	padding: 100px 0;
+
+	h1 {
+		color: ${({ theme }) => theme.color.salmao};
+		font-size: 50px;
+
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 40px;'])}
+		${({ theme }) => theme.media(sizeMedia, ['font-size: 30px;'])}
+	}
+
+
+`;
+
+const BoxCards =  styled.div`
+	width: ${boxSize};
+
+	article {
+	    margin: 15px;
+		width: 360px;
+
+
+		${({ theme }) => theme.media(sizeMediaSm, ['width: 298px;'])} 
+		${({ theme }) => theme.media(sizeMedia, ['width: 200px;'])} 
+	}
+
+	img {
+		height: 80px
+	}
+
+	div h5 {
+		color: ${({ theme }) => theme.color.salmao};
+    	font-weight: bold;
+		font-size: 17px
+	}
+
+	div p {
+		color: #404040;
+		
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 15px;'])}
+	}
+
+	div a {
+		color: #0077f7 !important;
+ 	    text-decoration: underline;
+        transition: .5s;
+		cursor: pointer;
+		margin: 0;
+	}
+
+	${({ theme }) => theme.media(sizeMediaMd, ['width: 100%'])}
+`
+
+/* BOX-THREE */
+
+const BoxThree = styled.section`
+	padding: 110px 0;
+
+	img {
+		height: 425px;
+
+		${({ theme }) => theme.media(sizeMediaMd, ['height: 300px;'])}
+	}
+
+	article {
+		width: 445px
+
+		${({ theme }) => theme.media(sizeMediaSm, ['width: 100%'])}
+	}
+	
+	article h3 {
+		color: ${({ theme }) => theme.color.salmao};
+		font-size: 45px;
+
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 30px'])}
+	}
+
+	article p {
+		${({ theme }) => theme.media(s)}
+	}
+
+`;
 
 
 class App extends Component {
 	constructor(props) {
 		super(props)
-
-		this.state = {
-			modalMenuSmartPhone: false
-		}
-
 		this.switchModal = this.switchModal.bind(this)
 	}
 
@@ -57,22 +179,27 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-
 		const modalMenuSmartPhone = document.querySelectorAll('.hidden-modal')
 
 		for (let i = 0; i < modalMenuSmartPhone.length; i++) {
 			modalMenuSmartPhone[i].addEventListener('click', this.switchModal)
 		}
+	}
 
+	componentWillUnmount() {
+		const modalMenuSmartPhone = document.querySelectorAll('.hidden-modal')
 
+		for (let i = 0; i < modalMenuSmartPhone.length; i++) {
+			modalMenuSmartPhone[i].removeEventListener('click', this.switchModal)
+		}
 	}
 
 	render() {
 		return (
 			<Fragment>
 				<Header firstPage={'first'} itensCad={['Entrar', 'Cadastrar']} itensNav={['O Projeto', 'Causas', 'Artigos',]} />
-				<div className='body'>
-					<section id="first" className="box-one d-flex flex-column align-items-center">
+				<Wrapper className="d-flex flex-column align-items-center">
+					<BoxOne id="first" className="d-flex flex-column align-items-center">
 						<h1 className="mt-3">
 							OnUni
 					</h1>
@@ -80,42 +207,42 @@ class App extends Component {
 							Ajudando você a ajudar outras pessoas
 					</h2>
 						<img src={pothoBoxOne} alt="três pessoas olhando para tela" />
-					</section>
-					<section id="oprojeto" className="box-two d-flex flex-column align-items-center">
+					</BoxOne>
+					<BoxTwo id="oprojeto" className="d-flex flex-column align-items-center">
 						<h1 className="mb-5">Quem Somos?</h1>
-						<div className="box-cards d-lg-flex flex-lg-row d-md-flex flex-md-column align-items-md-center
-						d-sm-flex flex-sm-column align-items-sm-center d-flex flex-column align-items-center">
+						<BoxCards className="d-flex flex-column flex-lg-row align-items-center 
+						justify-content-lg-center">
 							<article className="card d-flex flex-column align-items-center" >
 								<img className="card-img-top my-4" src={vetorMeninaBlack} alt="Menina de blackpower" />
-								<div className="style-card-box-two card-body d-flex flex-column align-items-center">
-									<h5 className="card-title mb-3">Proa</h5>
+								<div className="card-body d-flex flex-column align-items-center">
+									<h5 className="card-title text-center text-sm-left mb-3">Proa</h5>
 									<p className="card-text text-center">Somos fruto de uma instituição que acreditou em nós!</p>
-									<a href="https://www.proa.org.br" className="link-style mb-3">Saiba Mais</a>
+									<a href="https://www.proa.org.br" >Saiba Mais</a>
 								</div>
 							</article>
 							<article className="card d-flex flex-column align-items-center" >
 								<img className="card-img-top my-4" src={vetorSenhor} alt="Menina de dread" />
-								<div className="style-card-box-two card-body d-flex flex-column align-items-center">
-									<h5 className="card-title mb-3">Objetivos da ONU</h5>
+								<div className="card-body d-flex flex-column align-items-center">
+									<h5 className="card-title text-center text-sm-left mb-3">Objetivos da ONU</h5>
 									<p className="card-text text-center">Foi a partir da ODS 17 que identificamos nossa meta!</p>
-									<a href="http://www.agenda2030.org.br/ods/17/" className="link-style mb-3">Saiba Mais</a>
+									<a href="http://www.agenda2030.org.br/ods/17/">Saiba Mais</a>
 								</div>
 							</article>
 							<article className="card d-flex flex-column align-items-center">
 								<img className="card-img-top my-4" src={vetorMeninaDread} alt="Homem idoso" />
-								<div className="style-card-box-two card-body d-flex flex-column align-items-center">
-									<h5 className="card-title mb-3">Ligando ONGs a Pessoas</h5>
+								<div className="card-body d-flex flex-column align-items-center">
+									<h5 className="card-title text-center text-sm-left mb-3">Ligando ONGs a Pessoas</h5>
 									<p className="card-text text-center">Sonhamos em criar uma grande rede solidária!</p>
-									<a href="#" className="link-style mb-3">Saiba Mais</a>
+									<a href="#" >Saiba Mais</a>
 								</div>
 							</article>
-						</div>
-					</section>
-					<section className="box-three d-flex">
+						</BoxCards>
+					</BoxTwo>
+					<BoxThree className="d-flex flex-column flex-lg-row">
 						<img src={vetorMeninaLivro} alt="Menida de sueter vermelho e sai verde segurando um livro" />
-						<article className="pl-4 box-text-box-three">
-							<h3 className="pt-5"><strong>OnUni</strong> Faça parte dessa equipe</h3>
-							<p className="text-box-three">
+						<article className="px-4 pl-lg-4">
+							<h3 className="pt-5 text-center text-lg-left"><strong>OnUni</strong> Faça parte dessa equipe</h3>
+							<p className="text-center text-lg-left">
 								A OnUni foi criada para ligar ongs e pessoas que tem
 							vontade de fazer a diferença. <br />
 							Acessando nossa a lista de ongs, você escolhe a causa que
@@ -126,46 +253,46 @@ class App extends Component {
 							que acredita.
 						</p>
 						</article>
-					</section>
+					</BoxThree>
 					<section id="causas" className="box-four d-flex flex-column align-items-center">
 						<h1 className="mb-3">Causas</h1>
-						<p className="text-center mb-5">Nós da <strong>OnUni</strong> buscamos apoiar a maior quantidade
+						<p className="text-center mb-5 px-4 px-lg-0">Nós da <strong>OnUni</strong> buscamos apoiar a maior quantidade
 					de causas possível, mas esses são alguns exemplos de causas que
 					conseguimos alcançar.</p>
-						<div className="cards-box-four d-flex flex-column align-items-center">
-							<div className="line-box-four mb-5 d-flex justify-content-center">
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgArvore} alt="Árvore" />
+						<div className="cards-box-four d-flex flex-column align-items-center ">
+							<div className="line-box-four mb-0 mb-lg-3 d-flex justify-content-center flex-wrap">
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgArvore} alt="Árvore" />
 									<h5 className="card-title title-box-four text-center">Proteção Ambiental</h5>
 								</article>
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgLapis} alt="Lápis" />
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgLapis} alt="Lápis" />
 									<h5 className="card-title title-box-four text-center">Educação Infantil</h5>
 								</article>
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgMedicina} alt="Maleta de kit médico" />
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgMedicina} alt="Maleta de kit médico" />
 									<h5 className="card-title title-box-four text-center">Tratamento Médico</h5>
 								</article>
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgCachorro} alt="Pata de cachorro" />
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgCachorro} alt="Pata de cachorro" />
 									<h5 className="card-title title-box-four text-center">Proteção Animal</h5>
 								</article>
 							</div>
-							<div className="line-box-four d-flex justify-content-center">
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgCasa} alt="casa angulo frontal" />
+							<div className="line-box-four mb-0 mb-lg-3 d-flex justify-content-center flex-wrap">
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgCasa} alt="casa angulo frontal" />
 									<h5 className="card-title title-box-four text-center">Casa Solidária</h5>
 								</article>
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgRefugiados} alt="pai, mãe e filho no colo" />
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgRefugiados} alt="pai, mãe e filho no colo" />
 									<h5 className="card-title title-box-four text-center">Refugiados</h5>
 								</article>
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgComida} alt="Prato e talheres" />
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgComida} alt="Prato e talheres" />
 									<h5 className="card-title title-box-four text-center">Doação de Alimentos</h5>
 								</article>
-								<article className="card mx-2 py-4 d-flex flex-column align-items-center">
-									<img className="card-img-top img-box-four mb-4" src={imgWoman} alt="Mulher" />
+								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
+									<img className="img-box-four mb-4" src={imgWoman} alt="Mulher" />
 									<h5 className="card-title title-box-four text-center">Violência Doméstica</h5>
 								</article>
 							</div>
@@ -173,11 +300,11 @@ class App extends Component {
 					</section>
 					<section id="artigos" className="box-five d-flex flex-column align-items-center">
 						<h1 className="text-center mb-3">Histórias de Sucesso</h1>
-						<p className="text-presentation-box-five text-center mb-5">Postamos aqui algumas ações tranformadores que ocorrem pelo mundo,
+						<p className="text-presentation-box-five text-center mb-5 px-4 px-lg-4">Postamos aqui algumas ações tranformadores que ocorrem pelo mundo,
 						para que possam ser vistas pelo nossos usários
 						</p>
-						<div className="box-five-articles d-flex ">
-							<article className="card mx-3">
+						<div className="box-five-articles d-flex flex-column flex-lg-row">
+							<article className="card mx-0 mx-lg-3 mb-3">
 								<img src={noticiasVans} className="card-img-top" alt="Dois pés com tênis da marca Vans em cima de um amplificador" />
 								<div className="card-body d-flex flex-column justify-content-between">
 									<p className="card-text">Vans doará US$ 1 milhão para instituições que trabalham com saúde mental.</p>
@@ -188,7 +315,7 @@ class App extends Component {
 									</div>
 								</div>
 							</article>
-							<article className="card mx-3">
+							<article className="card mx-0 mx-lg-3 mb-3">
 								<img src={programaContraFome} className="card-img-top" alt="Grande grupo de pessoas tirando foto para comemoração pelo sucesso do programa" />
 								<div className="card-body d-flex flex-column justify-content-between">
 									<p className="card-text">Prêmio Nobel da Paz 2020 vai para o maior programa contra a fome do mundo.</p>
@@ -199,7 +326,7 @@ class App extends Component {
 									</div>
 								</div>
 							</article>
-							<article className="card mx-3">
+							<article className="card mx-0 mx-lg-3 mb-3">
 								<img src={estudantesPA} className="card-img-top" alt="Fotos de estudantes do Pará ao lado do projeto" />
 								<div className="card-body d-flex flex-column justify-content-between">
 									<p className="card-text">Estudantes do PA criam ecobarreira que impede plástico de chegar ao oceano.</p>
@@ -212,7 +339,7 @@ class App extends Component {
 							</article>
 						</div>
 					</section>
-				</div>
+				</Wrapper>
 				<Footer />
 				<div id="modalMenuSmartphone" className='modal-smartphone d-none'>
 					<aside className="aside-navbar-menu-smartphone d-flex 

@@ -1,15 +1,23 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
 
-import logo from '../../../imagesDefault/logo/logo.svg'
+/* IMG */
+import logo from '../../../imagesDefault/logo/logo.svg';
+
+/* CSS */
+const FooterComponent = styled.footer`
+    background-color: ${({ theme }) => theme.color.salmao};
+    padding: 56px;
+`
+
+
 
 function Footer() {
     return (
-        <footer>
-            <div className="footer-logo">
-                <img src={logo} alt="logo da OnUni"/>
-            </div>
-        </footer>
+        <FooterComponent className="d-flex justify-content-center alig-items-center">
+            <img src={logo} alt="logo da OnUni" />
+        </FooterComponent>
     )
-} 
+}
 
 export default Footer
