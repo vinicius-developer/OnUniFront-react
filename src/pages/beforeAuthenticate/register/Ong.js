@@ -1,77 +1,47 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 /* IMAGES */
 
-import logo from '../../../imagesDefault/logo/logoverde.svg'
+import logo from '../../../imagesDefault/logo/logoverde.svg';
 
 /* CSS */
 
-import { Wrapper, BoxOne, BoxOneInput, BoxTwoInput } from './style/Main'
+import { Wrapper, BoxOne, BoxOneInput, BoxTwoInput } from './style/Main';
 
 
 export default class FormOng extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cnpj: '',
-            email: '',
-            causa_social: '',
-            nome_fantasia: '',
-            razao_social: '',
-            password: '',
-            password_confirmation: '',
-            rua: '',
-            cep: '',
-            numero: '',
-            complemento: '',
-            bairro: '',
-            cidade: '',
-            uf: '',
-            descricao: '',
-            telefones: '',
+            form: {},
+            redirect: false
         }
     }
 
     setForm() {
-        const cnpj = document.getElementById('cnpj').value
-        const email = document.getElementById('email').value
-        const causaSocial = document.getElementById('causa_social').value
-        const nomeFantasia = document.getElementById('nome_fantasia').value
-        const razaoSocial = document.getElementById('razao_social').value
-        const password = document.getElementById('password').value
-        const passwordConfirmation = document.getElementById('password_confirmation').value
-        const rua = document.getElementById('rua').value
-        const cep = document.getElementById('cep').value
-        const numero = document.getElementById('numero').value
-        const complemento = document.getElementById('complemento').value
-        const bairro = document.getElementById('bairro').value
-        const cidade = document.getElementById('cidade').value
-        const uf = document.getElementById('uf').value
-        const descricao = document.getElementById('descricao').value
-        const telefone = document.getElementById('telefone').value
-
         this.setState({
-            cnpj: cnpj,
-            email: email,
-            causa_social: causaSocial,
-            nome_fantasia: nomeFantasia,
-            razao_social: razaoSocial,
-            password: password,
-            password_confirmation: passwordConfirmation,
-            rua: rua,
-            cep: cep,
-            numero: numero,
-            complemento: complemento,
-            bairro: bairro,
-            cidade: cidade,
-            uf: uf,
-            descricao: descricao,
-            telefone: telefone
+            form: {
+                cnpj: document.getElementById('cnpj').value,
+                email: document.getElementById('email').value,
+                causa_social: document.getElementById('causa_social').value,
+                nome_fantasia: document.getElementById('nome_fantasia').value,
+                razao_social: document.getElementById('razao_social').value,
+                password: document.getElementById('password').value,
+                password_confirmation: document.getElementById('password_confirmation').value,
+                rua: document.getElementById('rua').value,
+                cep: document.getElementById('cep').value,
+                numero: document.getElementById('numero').value,
+                complemento: document.getElementById('complemento').value,
+                bairro: document.getElementById('bairro').value,
+                cidade: document.getElementById('cidade').value,
+                uf: document.getElementById('uf').value,
+                descricao: document.getElementById('descricao').value,
+                telefone: document.getElementById('telefone').value
+            }
         })
     }
-
-
 
     componentDidMount() {
         document.getElementById('cadastrar').addEventListener('click', (e) => {
@@ -85,17 +55,13 @@ export default class FormOng extends Component {
             async function send(form, header) {
                 await axios.post('http://127.0.0.1:8000/api/ong/auth/register', form, header)
                     .then(response => {
-
+                        this.setForm({redirect: true})
                     })
                     .catch(error => {
-                        console.log(error.response)
                         clear(error.response.data.errors)
                         showMessageError(error.response.data.errors)
                     })
             }
-
-            send(this.state.form, header)
-
 
             function showMessageError(errors) {
                 for (let label in errors) {
@@ -108,34 +74,30 @@ export default class FormOng extends Component {
                 }
             }
 
-            function clear(errors) {
-                const prefix = [
-                    "cnpj",
-                    "email",
-                    "causa_social",
-                    "nome_fantasia",
-                    "razao_social",
-                    "password",
-                    "password_confirmation",
-                    "rua",
-                    "cep",
-                    "numero",
-                    "bairro",
-                    "cidade",
-                    "uf",
-                    "descricao",
-                    "telefone",
-                ]
+            function clear() {
+                const prefix = ["cnpj", "email", "causa_social", "nome_fantasia", "razao_social", "password", "password_confirmation", "rua", "cep", "numero", "bairro", "cidade", "uf", "descricao", "telefone"]
 
-                for(let i = 0; i < prefix.length; i++) {
+                for (let i = 0; i < prefix.length; i++) {
                     const element = document.getElementById(prefix[i]).nextElementSibling.firstChild
-                    console.log(element)
                     if (element != null) element.remove()
                 }
+            }
+
+            function success(response) {
+                const elementText = document.createElement('h1');
+                const contentText = document.createTextNode(response.data.message)
+                const boxOne = document.querySelector('section')
+
+                document.querySelector('form').classList = 'd-none'
+
+                elementText.appendChild(contentText);
+
+                boxOne.appendChild(elementText)
+
 
             }
 
-
+            send(this.state.form, header)
         })
 
     }
@@ -144,10 +106,11 @@ export default class FormOng extends Component {
     render() {
         return (
             <Wrapper className="d-flex align-items-center justify-content-center">
+                {!this.state.redirect ?
                 <BoxOne className="d-flex flex-column align-items-center">
                     <img src={logo} alt="logo onuni com cor verde" className="mt-3" />
-                    <h1 className="mt-3">Cadastrar</h1>
                     <form className="mt-3 d-flex flex-column align-items-center">
+                        <h1 className="mt-1">Cadastrar</h1>
                         <BoxOneInput className="d-flex flex-column">
                             <label htmlFor="cnpj">CNPJ: *</label>
                             <input type="text" id="cnpj" className="mb-1" />
@@ -162,17 +125,17 @@ export default class FormOng extends Component {
 
                         <BoxOneInput className="d-flex flex-column">
                             <label htmlFor="causa_social">Causa Social: *</label>
-                            <select id="causa_social" defaultValue="selected" className="mb-1">
-                                <option value="selected" disabled>Escolha</option>
+                            <select id="causa_social" defaultValue="" className="mb-1">
+                                <option value="" disabled>Escolha</option>
                                 <option value="1">Proteção Ambiental</option>
-                                <option value="11">Educação Infantil</option>
-                                <option value="21">Tratamento Médico</option>
-                                <option value="31">Proteção Animal</option>
-                                <option value="41">Casa Solidária</option>
-                                <option value="51">Refugiados</option>
-                                <option value="61">Doação de Alimentos</option>
-                                <option value="71">Violência Doméstica</option>
-                                <option value="81">Outros</option>
+                                <option value="2">Educação Infantil</option>
+                                <option value="3">Tratamento Médico</option>
+                                <option value="4">Proteção Animal</option>
+                                <option value="5">Casa Solidária</option>
+                                <option value="6">Refugiados</option>
+                                <option value="7">Doação de Alimentos</option>
+                                <option value="8">Violência Doméstica</option>
+                                <option value="9">Outros</option>
                             </select>
                             <div className="mb-4" id="messageErrorCausaSocial"></div>
                         </BoxOneInput>
@@ -196,18 +159,17 @@ export default class FormOng extends Component {
                             <div className="mb-4" id="messageErrorTelUm"></div>
                         </BoxOneInput>
 
-                        <BoxTwoInput className="d-flex flex-column flex-sm-row">
-                            <div className="mr-3">
-                                <label htmlFor="password">Senha: *</label>
-                                <input type="password" id="password" className="mb-1" />
-                                <div className="mb-4" id="messageErrorPassword"></div>
-                            </div>
-                            <div>
-                                <label htmlFor="password_confirmation">Confirmação de Senha: *</label>
-                                <input type="password" id="password_confirmation" className="mb-1" />
-                                <div className="mb-4" id="messageErrorPassowordConfirmation"></div>
-                            </div>
-                        </BoxTwoInput>
+                        <BoxOneInput className="d-flex flex-column">
+                            <label htmlFor="password">Senha: *</label>
+                            <input type="password" id="password" className="mb-1" />
+                            <div className="mb-4" id="messageErrorPassword"></div>
+                        </BoxOneInput>
+
+                        <BoxOneInput className="d-flex flex-column">
+                            <label htmlFor="password_confirmation">Confirmação de Senha: *</label>
+                            <input type="password" id="password_confirmation" className="mb-1" />
+                            <div className="mb-4" id="messageErrorPassowordConfirmation"></div>
+                        </BoxOneInput>
 
                         <BoxOneInput className="d-flex flex-column">
                             <label htmlFor="rua">Rua/Avenida: *</label>
@@ -249,35 +211,35 @@ export default class FormOng extends Component {
                             </div>
                             <div>
                                 <label htmlFor="uf">UF: *</label>
-                                <select name="uf" id="uf" defaultValue="selected" className="mb-1">
-                                    <option value='selected' disabled>Escolha</option>
+                                <select name="uf" id="uf" defaultValue="" className="mb-1">
+                                    <option value='' disabled>Escolha</option>
                                     <option value="1">AC</option>
-                                    <option value="11">AL</option>
-                                    <option value="21">AP</option>
-                                    <option value="31">AM</option>
-                                    <option value="41">BA</option>
-                                    <option value="51">CE</option>
-                                    <option value="61">DF</option>
-                                    <option value="71">DF</option>
-                                    <option value="81">GO</option>
-                                    <option value="91">MA</option>
-                                    <option value="101">MT</option>
-                                    <option value="111">MS</option>
-                                    <option value="121">MG</option>
-                                    <option value="131">PA</option>
-                                    <option value="141">PB</option>
-                                    <option value="151">PR</option>
-                                    <option value="161">PE</option>
-                                    <option value="171">PI</option>
-                                    <option value="181">RJ</option>
-                                    <option value="191">RN</option>
-                                    <option value="201">RS</option>
-                                    <option value="211">RO</option>
-                                    <option value="221">RR</option>
-                                    <option value="231">SC</option>
-                                    <option value="241">SP</option>
-                                    <option value="251">SE</option>
-                                    <option value="261">TO</option>
+                                    <option value="2">AL</option>
+                                    <option value="3">AP</option>
+                                    <option value="4">AM</option>
+                                    <option value="5">BA</option>
+                                    <option value="6">CE</option>
+                                    <option value="7">DF</option>
+                                    <option value="8">DF</option>
+                                    <option value="9">GO</option>
+                                    <option value="10">MA</option>
+                                    <option value="11">MT</option>
+                                    <option value="12">MS</option>
+                                    <option value="13">MG</option>
+                                    <option value="14">PA</option>
+                                    <option value="15">PB</option>
+                                    <option value="16">PR</option>
+                                    <option value="17">PE</option>
+                                    <option value="18">PI</option>
+                                    <option value="19">RJ</option>
+                                    <option value="20">RN</option>
+                                    <option value="21">RS</option>
+                                    <option value="22">RO</option>
+                                    <option value="23">RR</option>
+                                    <option value="24">SC</option>
+                                    <option value="25">SP</option>
+                                    <option value="26">SE</option>
+                                    <option value="27">TO</option>
                                 </select>
                                 <div className="mb-4" id="messageErrorUf"></div>
                             </div>
@@ -291,7 +253,10 @@ export default class FormOng extends Component {
 
                         <button id="cadastrar" onClick={e => this.setForm(e)} className="mb-5">Cadastrar</button>
                     </form>
-                </BoxOne>
+                </BoxOne> 
+                : 
+                <Redirect to='/authenticate/login'/>
+                }
             </Wrapper>
         )
     }
