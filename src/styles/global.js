@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
 
 * {
     box-sizing: border-box;
@@ -12,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
 }
 
 body {
-   font-family: 'Poppins', sans-serif; 
+   font-family: ${({ theme }) => theme.font.poppins}; 
 }
 
 button:focus {

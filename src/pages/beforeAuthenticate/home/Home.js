@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from 'react-scroll'
+//import { Link } from 'react-router-dom'
 import Header from '../default/Header'
 import Footer from '../default/Footer'
 
@@ -30,7 +31,7 @@ import noticiasVans from './images/box-five/vansTenis.jpg'
 import programaContraFome from './images/box-five/programaContraFome.jpg'
 
 /* CSS */
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const boxSize = '981px';
 const colorBackgroudBox = '#fdecec';
@@ -64,11 +65,11 @@ const BoxOne = styled.section`
     	font-style: bold;
 		width: 470px;
 		
-		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 20px;', 'width: 270px'])}
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 20px;', 'width: 270px;'])}
 	}
 
 	img {
-		width: 90%;
+		width: 100%;
 	}
 
 	${({ theme }) => theme.media(sizeMediaMd, ['width: 100%;'])}
@@ -143,7 +144,7 @@ const BoxThree = styled.section`
 	}
 
 	article {
-		width: 445px
+		width: 445px;
 
 		${({ theme }) => theme.media(sizeMediaSm, ['width: 100%'])}
 	}
@@ -156,11 +157,170 @@ const BoxThree = styled.section`
 	}
 
 	article p {
-		${({ theme }) => theme.media(s)}
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 15px;'])}
 	}
 
 `;
 
+/* BOX-FOUR */
+
+const BoxFour = styled.section`
+	background-color: ${colorBackgroudBox};
+	width: 100%;
+	padding: 110px 0;
+
+	h1 {
+		color: ${({theme}) => theme.color.salmao};
+		font-size: 50px;
+
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 40px'])}
+		${({ theme }) => theme.media(sizeMedia, ['font-size: 30px'])}
+	}
+
+	p {
+		width: 400px;
+
+		${({ theme }) => theme.media(sizeMediaSm, ['width: 100%;' , 'font-size: 15px;'])}
+	}
+
+`;
+
+const LineBoxFour = styled.section`
+	width: ${sizeMediaMd};
+
+	${({ theme }) => theme.media(sizeMediaMd, ['width: 500px'])}
+	${({ theme }) => theme.media(sizeMediaSm, ['width: 300px'])}
+
+	article {
+		width: 225px;
+	}
+
+	article img {
+		width: 80px;
+		height: 80px;
+	}
+
+	article h5 {
+		color: ${({ theme }) => theme.color.salmao};
+		font-size: 16px;
+	}
+
+`;
+
+/* BOX-FIVE */
+
+const BoxFive = styled.section`
+	padding: 110px 0;
+
+	h1 {
+		color: ${({ theme }) => theme.color.salmao};
+		font-size: 50px;
+
+		${({ theme }) => theme.media(sizeMediaSm, ['font-size: 40px;'])}
+		${({ theme }) => theme.media(sizeMedia, ['font-size: 30px;'])}
+	}
+
+	p {
+		width: 400px;
+
+		${({ theme }) => theme.media(sizeMediaSm, ['width: 100%;', 'font-size: 15px;'])}
+		${({ theme }) => theme.media(sizeMedia, ['font-size: 15px;'])}
+	}
+`
+
+const CardBoxFive = styled.article`
+	width: 300px;
+	color: ${({ theme }) => theme.color.salmao };
+
+	img {
+		width: 298px;
+		height: 180px;
+	}
+
+	div p {
+		width: 258px;
+	}
+
+	div div span {
+		height: 20px;
+		font-size: 12px;
+	}
+
+	div div a {
+		color: #0077f7;
+		text-decoration: underline;
+	}
+`;
+
+/* KEYFRAMES */
+
+const showMenuSmartphone = keyframes`
+	from {
+		width: 0;
+	}
+	to {
+		width: 200px;
+	}
+`;
+
+const buttonsMenuSmartphone = keyframes`
+	from {
+		visibility: hidden;
+	}
+	75% {
+		visibility: hidden;
+		color: ${({ theme }) => theme.color.lima};
+	}
+	to {
+		color: #ffffff;
+	}
+`
+const ModalSmartphone = styled.div`
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0, .5);
+
+	aside {
+		position: absolute;
+		left: 0;
+		width: 200px;
+		height: 100vh;
+		background-color: ${({ theme }) => theme.color.lima};
+		animation-name: ${showMenuSmartphone};
+		animation-duration: .5s;
+	}
+
+	aside button {
+		position: absolute;
+		right: 15px;
+		top: 5px;
+		cursor: pointer;
+		background-color: ${({ theme }) => theme.color.lima};
+		border: none; 
+		color: #ffffff;
+	}
+
+	aside ul {
+		width: 70%;
+		color: #ffffff;
+	}
+
+	aside ul li {
+		margin: 20px 0;
+		animation-name: ${buttonsMenuSmartphone};
+		animation-duration: .5s;
+		visibility: visible
+	}
+
+	aside ul li a {
+		text-decoration: underline
+	}
+
+
+`
 
 class App extends Component {
 	constructor(props) {
@@ -254,31 +414,31 @@ class App extends Component {
 						</p>
 						</article>
 					</BoxThree>
-					<section id="causas" className="box-four d-flex flex-column align-items-center">
+					<BoxFour id="causas" className="d-flex flex-column align-items-center">
 						<h1 className="mb-3">Causas</h1>
 						<p className="text-center mb-5 px-4 px-lg-0">Nós da <strong>OnUni</strong> buscamos apoiar a maior quantidade
 					de causas possível, mas esses são alguns exemplos de causas que
 					conseguimos alcançar.</p>
-						<div className="cards-box-four d-flex flex-column align-items-center ">
-							<div className="line-box-four mb-0 mb-lg-3 d-flex justify-content-center flex-wrap">
+						<div className="d-flex flex-column align-items-center ">
+							<LineBoxFour className="line-box-four mb-0 mb-lg-3 d-flex justify-content-center flex-wrap">
 								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
-									<img className="img-box-four mb-4" src={imgArvore} alt="Árvore" />
+									<img className="mb-4" src={imgArvore} alt="Árvore" />
 									<h5 className="card-title title-box-four text-center">Proteção Ambiental</h5>
 								</article>
 								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
-									<img className="img-box-four mb-4" src={imgLapis} alt="Lápis" />
+									<img className="mb-4" src={imgLapis} alt="Lápis" />
 									<h5 className="card-title title-box-four text-center">Educação Infantil</h5>
 								</article>
 								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
-									<img className="img-box-four mb-4" src={imgMedicina} alt="Maleta de kit médico" />
+									<img className="mb-4" src={imgMedicina} alt="Maleta de kit médico" />
 									<h5 className="card-title title-box-four text-center">Tratamento Médico</h5>
 								</article>
 								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
-									<img className="img-box-four mb-4" src={imgCachorro} alt="Pata de cachorro" />
+									<img className="mb-4" src={imgCachorro} alt="Pata de cachorro" />
 									<h5 className="card-title title-box-four text-center">Proteção Animal</h5>
 								</article>
-							</div>
-							<div className="line-box-four mb-0 mb-lg-3 d-flex justify-content-center flex-wrap">
+							</LineBoxFour>
+							<LineBoxFour className="line-box-four mb-0 mb-lg-3 d-flex justify-content-center flex-wrap">
 								<article className="card mx-2 mb-3 mb-lg-0 py-4 d-flex flex-column align-items-center">
 									<img className="img-box-four mb-4" src={imgCasa} alt="casa angulo frontal" />
 									<h5 className="card-title title-box-four text-center">Casa Solidária</h5>
@@ -295,57 +455,56 @@ class App extends Component {
 									<img className="img-box-four mb-4" src={imgWoman} alt="Mulher" />
 									<h5 className="card-title title-box-four text-center">Violência Doméstica</h5>
 								</article>
-							</div>
+							</LineBoxFour>
 						</div>
-					</section>
-					<section id="artigos" className="box-five d-flex flex-column align-items-center">
+					</BoxFour>
+					<BoxFive id="artigos" className="d-flex flex-column align-items-center">
 						<h1 className="text-center mb-3">Histórias de Sucesso</h1>
-						<p className="text-presentation-box-five text-center mb-5 px-4 px-lg-4">Postamos aqui algumas ações tranformadores que ocorrem pelo mundo,
+						<p className="text-center mb-5 px-4 px-lg-4">Postamos aqui algumas ações tranformadores que ocorrem pelo mundo,
 						para que possam ser vistas pelo nossos usários
 						</p>
-						<div className="box-five-articles d-flex flex-column flex-lg-row">
-							<article className="card mx-0 mx-lg-3 mb-3">
+						<div className="d-flex flex-column flex-lg-row">
+							<CardBoxFive className="card mx-0 mx-lg-3 mb-3">
 								<img src={noticiasVans} className="card-img-top" alt="Dois pés com tênis da marca Vans em cima de um amplificador" />
 								<div className="card-body d-flex flex-column justify-content-between">
 									<p className="card-text">Vans doará US$ 1 milhão para instituições que trabalham com saúde mental.</p>
 									<div className="d-flex justify-content-between align-items-end">
-										<span className="fs-6">06, novembro de 2020</span>
+										<span>06, novembro de 2020</span>
 										<a href="https://www.vans.com.br/?gclid=CjwKCAiAqJn9BRB0EiwAJ1SztdXm_urGdcdZcNDvmFRS5tSTc_WOQzrsXZO75uNjQzoxZjogITqAtBoCUfsQAvD_BwE"
 											className="link-style" target="_blank" rel="noreferrer">Leia Mais</a>
 									</div>
 								</div>
-							</article>
-							<article className="card mx-0 mx-lg-3 mb-3">
+							</CardBoxFive>
+							<CardBoxFive className="card mx-0 mx-lg-3 mb-3">
 								<img src={programaContraFome} className="card-img-top" alt="Grande grupo de pessoas tirando foto para comemoração pelo sucesso do programa" />
 								<div className="card-body d-flex flex-column justify-content-between">
 									<p className="card-text">Prêmio Nobel da Paz 2020 vai para o maior programa contra a fome do mundo.</p>
 									<div className="d-flex justify-content-between align-items-end">
-										<span className="fs-6">14, outubro de 2020</span>
+										<span>14, outubro de 2020</span>
 										<a href="https://news.un.org/pt/tags/programa-mundial-de-alimentos"
 											className="link-style" target="_blank" rel="noreferrer">Leia Mais</a>
 									</div>
 								</div>
-							</article>
-							<article className="card mx-0 mx-lg-3 mb-3">
+							</CardBoxFive>
+							<CardBoxFive className="card mx-0 mx-lg-3 mb-3">
 								<img src={estudantesPA} className="card-img-top" alt="Fotos de estudantes do Pará ao lado do projeto" />
 								<div className="card-body d-flex flex-column justify-content-between">
 									<p className="card-text">Estudantes do PA criam ecobarreira que impede plástico de chegar ao oceano.</p>
 									<div className="content-box-five d-flex justify-content-between align-items-end">
-										<span className="fs-6">11, setembro de 2020</span>
+										<span>11, setembro de 2020</span>
 										<a href="https://portal.ufpa.br/index.php/ultimas-noticias2/11439-novo-projeto-do-time-enactus-ufpa-conquista-reconhecimento-nacional"
 											className="link-style" target="_blank" rel="noreferrer">Leia Mais</a>
 									</div>
 								</div>
-							</article>
+							</CardBoxFive>
 						</div>
-					</section>
+					</BoxFive>
 				</Wrapper>
 				<Footer />
-				<div id="modalMenuSmartphone" className='modal-smartphone d-none'>
-					<aside className="aside-navbar-menu-smartphone d-flex 
-						align-items-center flex-column">
-						<button className="close-modal hidden-modal"> X </button>
-						<ul className="list-menu-smartphone mt-5">
+				<ModalSmartphone id="modalMenuSmartphone" className='d-none'>
+					<aside className="d-flex align-items-center flex-column">
+						<button className="hidden-modal"> X </button>
+						<ul className="mt-5">
 							<li>
 								<Link className='hidden-modal' to={'oprojeto'} spy={true} smooth={true} duration={500}>
 									O Projeto
@@ -371,7 +530,7 @@ class App extends Component {
 							</li>
 						</ul>
 					</aside>
-				</div>
+				</ModalSmartphone>
 			</Fragment>
 		);
 	}

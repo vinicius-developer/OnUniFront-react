@@ -110,9 +110,9 @@ class Header extends Component {
 										{this.props.itensCad.map((itens, index) => {
 											return (
 												<ItemListHeader key={index}>
-													<Link to={itens.replace(' ', '').toLowerCase()} spy={true} smooth={true} duration={500}>
+													<a href={'/authenticate/' + itens.toLowerCase()}>
 														{itens}
-													</Link>
+													</a>
 												</ItemListHeader>
 											)
 										})}

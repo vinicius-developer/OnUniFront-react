@@ -10,8 +10,6 @@ const FooterComponent = styled.footer`
     padding: 56px;
 `
 
-
-
 function Footer() {
     return (
         <FooterComponent className="d-flex justify-content-center alig-items-center">
