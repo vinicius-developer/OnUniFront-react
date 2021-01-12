@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import VMasker from 'vanilla-masker';
 
 /* IMAGES */
 
@@ -16,9 +17,22 @@ export default class FormOng extends Component {
         super(props)
         this.state = {
             form: {},
-            redirect: false
         }
+
+        this.setForm = this.setForm.bind(this)
+        this.request = this.request.bind(this)
+        this.inputHandler = this.inputHandler.bind(this)
+        this.clear = this.clear.bind(this)
     }
+
+    componentDidMount() {
+        document.getElementById('cadastrar').addEventListener('click', e => this.request(e))
+    }
+
+    componentWillUnmount() {
+        document.getElementById('cadastrar').removeEventListener('click', e => this.request(e))
+    }
+
 
     setForm() {
         this.setState({
@@ -43,72 +57,85 @@ export default class FormOng extends Component {
         })
     }
 
-    componentDidMount() {
-        document.getElementById('cadastrar').addEventListener('click', (e) => {
-            e.preventDefault()
-            this.setForm()
+    request(e) {
+        e.preventDefault()
+        this.setForm()
 
-            const header = {
-                'Content-Type': 'application/json'
+        const header = {
+            'Content-Type': 'application/json'
+        }
+
+        async function send(form, header) {
+            await axios.post('http://127.0.0.1:8000/api/ong/auth/register', form, header)
+                .then(response => {
+                    success(response)
+                })
+                .catch(error => {
+                    clear(error.response.data.errors)
+                    showMessageError(error.response.data.errors)
+                })
+        }
+
+        function showMessageError(errors) {
+            for (let label in errors) {
+                const errorField = document.getElementById(label).nextElementSibling
+                const elementText = document.createElement('p')
+                const createTextError = document.createTextNode(errors[label])
+
+                elementText.appendChild(createTextError)
+                errorField.appendChild(elementText)
             }
+        }
 
-            async function send(form, header) {
-                await axios.post('http://127.0.0.1:8000/api/ong/auth/register', form, header)
-                    .then(response => {
-                        this.setForm({redirect: true})
-                    })
-                    .catch(error => {
-                        clear(error.response.data.errors)
-                        showMessageError(error.response.data.errors)
-                    })
+        function clear() {
+            const prefix = ["cnpj", "email", "causa_social", "nome_fantasia", "razao_social", "password", "password_confirmation", "rua", "cep", "numero", "bairro", "cidade", "uf", "descricao", "telefone"]
+
+            for (let i = 0; i < prefix.length; i++) {
+                const element = document.getElementById(prefix[i]).nextElementSibling.firstChild
+                if (element != null) element.remove()
             }
+        }
 
-            function showMessageError(errors) {
-                for (let label in errors) {
-                    const errorField = document.getElementById(label).nextElementSibling
-                    const elementText = document.createElement('p')
-                    const createTextError = document.createTextNode(errors[label])
+        function success(response) {
+            const elementText = document.createElement('p');
+            const contentText = document.createTextNode(response.data.message)
+            const boxOne = document.querySelector('section')
 
-                    elementText.appendChild(createTextError)
-                    errorField.appendChild(elementText)
-                }
-            }
+            document.querySelector('form').classList = 'd-none'
 
-            function clear() {
-                const prefix = ["cnpj", "email", "causa_social", "nome_fantasia", "razao_social", "password", "password_confirmation", "rua", "cep", "numero", "bairro", "cidade", "uf", "descricao", "telefone"]
+            elementText.appendChild(contentText);
 
-                for (let i = 0; i < prefix.length; i++) {
-                    const element = document.getElementById(prefix[i]).nextElementSibling.firstChild
-                    if (element != null) element.remove()
-                }
-            }
+            elementText.classList = 'message-success'
 
-            function success(response) {
-                const elementText = document.createElement('h1');
-                const contentText = document.createTextNode(response.data.message)
-                const boxOne = document.querySelector('section')
+            boxOne.appendChild(elementText)
+        }
 
-                document.querySelector('form').classList = 'd-none'
-
-                elementText.appendChild(contentText);
-
-                boxOne.appendChild(elementText)
-
-
-            }
-
-            send(this.state.form, header)
-        })
-
+        send(this.state.form, header)
     }
+
+    inputHandler(masks, max, event) {
+        var c = event.target;
+        var v = c.value.replace(/\D/g, '');
+        var m = c.value.length > max ? 1 : 0;
+        VMasker(c).unMask();
+        VMasker(c).maskPattern(masks[m]);
+        c.value = VMasker.toPattern(v, masks[m]);
+    }
+
+    mask(element, mask) {
+        VMasker(element).maskPattern(mask[0]);
+        element.addEventListener('input', this.inputHandler.bind(undefined, mask, 14), false);
+    }
+
 
 
     render() {
         return (
-            <Wrapper className="d-flex align-items-center justify-content-center">
-                {!this.state.redirect ?
+            <Wrapper className="d-flex align-items-center justify-content-center" >
                 <BoxOne className="d-flex flex-column align-items-center">
-                    <img src={logo} alt="logo onuni com cor verde" className="mt-3" />
+                    <Link to="/" className="d-flex justify-content-center">
+                        <img src={logo} alt="logo onuni com cor verde" className="mt-3" />
+                    </Link>
                     <form className="mt-3 d-flex flex-column align-items-center">
                         <h1 className="mt-1">Cadastrar</h1>
                         <BoxOneInput className="d-flex flex-column">
@@ -155,7 +182,7 @@ export default class FormOng extends Component {
 
                         <BoxOneInput className="d-flex flex-column">
                             <label htmlFor="">Telefone: *</label>
-                            <input type="text" id="telefone" className="mb-1" />
+                            <input type="text" onChange={e => this.mask(e.target, ['(99) 9999-9999', '(99) 99999-9999'])} id="telefone" className="mb-1" />
                             <div className="mb-4" id="messageErrorTelUm"></div>
                         </BoxOneInput>
 
@@ -180,7 +207,7 @@ export default class FormOng extends Component {
                         <BoxTwoInput className="d-flex flex-column flex-sm-row">
                             <div className="mr-3">
                                 <label htmlFor="cep">CEP: *</label>
-                                <input type="text" id="cep" max="9" className="mb-1" />
+                                <input type="text" onChange={e => this.mask(e.target, ['99999-999'])} id="cep" max="9" className="mb-1" />
                                 <div className="mb-4" id="messageErrorCep" ></div>
                             </div>
                             <div>
@@ -251,12 +278,9 @@ export default class FormOng extends Component {
                             <div className="mb-4" id="messageErrorDescricao"></div>
                         </BoxOneInput>
 
-                        <button id="cadastrar" onClick={e => this.setForm(e)} className="mb-5">Cadastrar</button>
+                        <button id="cadastrar" className="mb-5">Cadastrar</button>
                     </form>
-                </BoxOne> 
-                : 
-                <Redirect to='/authenticate/login'/>
-                }
+                </BoxOne>
             </Wrapper>
         )
     }

@@ -63,7 +63,7 @@ function Select() {
                                 Ong
                             </button>
                         </Link>
-                        <Link href="/authenticate/cadastrar/doador">
+                        <Link to="/authenticate/cadastrar/doador">
                             <button className="my-2">
                                 Doador
                             </button>

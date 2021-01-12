@@ -25,12 +25,15 @@ const BoxOne = styled.section`
     ${({ theme }) => theme.media('735px', ['min-width: 512px;'])}
     ${({ theme }) => theme.media('527px', ['min-width: auto;', 'width: 95%'])}
 
-
-    img {
+    a {
         width: 15%;
 
         ${({ theme }) => theme.media('735px', ['width: 25%;'])}
         ${({ theme }) => theme.media('527px', ['width: 35%;'])}
+    }
+
+    a img {
+        width: 100%;
     }
 
     h1 {
@@ -53,6 +56,15 @@ const BoxOne = styled.section`
         padding: 10px;
         border: none;
         border-radius: 5px; 
+    }
+
+    .message-success {
+        color: ${({ theme }) => theme.color.salmao};
+        text-align: center;
+        font-size: 25px;
+        margin: 0 40px;
+
+        ${({ theme }) => theme.media('527px', ['font-size: 20px'])}
     }
 `
 
