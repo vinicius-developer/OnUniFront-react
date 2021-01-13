@@ -52,11 +52,23 @@ export default class Login extends Component {
 
         async function send(body, header) {
             if(body.userkey.length === 14) {
+                await axios.post('http://127.0.0.1:8000/api/doador/auth/login', body, header)
+                    .then(response => {
+
+                    })
+                    .catch(error => {
+                        
+                    })
 
             } else if (body.userkey.length === 18) {
 
             } else {
-
+                const messageErrorUserkey = document.getElementById('message-error-userkey')
+                const elementMessage = document.createElement('p')
+                const textMessage = document.createTextNode('Texto inserido não corresponde a CNPJ nem CPF')
+                elementMessage.appendChild(textMessage)
+                if(messageErrorUserkey.firstChild != null) messageErrorUserkey.firstChild.remove()
+                messageErrorUserkey.appendChild(elementMessage)
             }
 
 
@@ -81,13 +93,13 @@ export default class Login extends Component {
                             id="userkey" 
                             className="mb-1" 
                             onChange={e => VMasker(e.target, ['999.999.999-99', '99.999.999/9999-99'])}/>
-                            <div className="mb-4 message-error-userkey"></div>
+                            <div className="mb-4" id="message-error-userkey"></div>
                         </BoxOneInput>
 
                         <BoxOneInput className="d-flex flex-column">
                             <label htmlor="password">Senha: *</label>
                             <input type="password" className="mb-1" id="password" />
-                            <div className="mb-4 message-error-password"></div>
+                            <div className="mb-4" id="message-error-password"></div>
                         </BoxOneInput>
 
                         <button className="mb-5" id="cadastrar">Entrar</button>
