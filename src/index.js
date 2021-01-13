@@ -7,9 +7,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Home from './pages/beforeAuthenticate/home/Home';
 import Select from './pages/beforeAuthenticate/select/Select';
-import RegisterOng from './pages/beforeAuthenticate/register/Ong';
-import RegisterDoador from './pages/beforeAuthenticate/register/Doador';
-import Login from './pages/beforeAuthenticate/login/Login'
+import RegisterOng from './pages/beforeAuthenticate/account/Ong';
+import RegisterDoador from './pages/beforeAuthenticate/account/Doador';
+import Login from './pages/beforeAuthenticate/account/Login'
 
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
         <Route path="/authenticate/cadastrar" component={Select} exact/>
         <Route path="/authenticate/cadastrar/ong" component={RegisterOng} />
         <Route path="/authenticate/cadastrar/doador" component={RegisterDoador} />
-        <Route path="/authenticate/login" component={Login}/>
+        <Route path="/authenticate/entrar" component={Login}/>
         <Route path="*" component={() => <div>Essa página não existe</div>}/>
       </Switch>
     </BrowserRouter>
