@@ -8,7 +8,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './pages/beforeAuthenticate/home/Home';
 import Select from './pages/beforeAuthenticate/select/Select';
 import RegisterOng from './pages/beforeAuthenticate/account/Ong';
-import RegisterDoador from './pages/beforeAuthenticate/account/Doador';
+import RegisterDoador from './pages/beforeAuthenticate/account/Donor';
 import Login from './pages/beforeAuthenticate/account/Login'
 
 
