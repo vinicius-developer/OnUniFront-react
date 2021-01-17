@@ -39,7 +39,8 @@ const BoxOne = styled.section`
     h1 {
         font-family: ${({ theme }) => theme.font.roboto};
         color: ${({ theme }) => theme.color.salmao};
-        font-size: 35px
+        font-size: 35px;
+        font-weight: bold; 
     }
 
     form {
@@ -56,6 +57,7 @@ const BoxOne = styled.section`
         padding: 10px;
         border: none;
         border-radius: 5px; 
+        font-weight: bold;
     }
 
     .message-success {
@@ -74,6 +76,7 @@ const BoxOneInput = styled.div`
     label {
         font-size: 14px;
         color: ${details};
+        font-weight: bold;
     }
 
     input {
@@ -83,6 +86,7 @@ const BoxOneInput = styled.div`
         outline: none;
         color: ${details};
         font-size: 14px;
+        font-weight:bold
     }
 
     select {
@@ -109,7 +113,8 @@ const BoxOneInput = styled.div`
         width: 100%;
         height: 40px;
         color: ${({ theme }) => theme.color.salmao};
-        font-size: 13px
+        font-size: 13px;
+        font-weight: bold;
     }
 
 `;
@@ -121,6 +126,7 @@ const BoxTwoInput = styled.div`
     label {
         font-size: 14px;
         color: ${details};
+        font-weight: bold;
     }
 
     div {
@@ -155,6 +161,7 @@ const BoxTwoInput = styled.div`
         height: 40px;
         color: ${({ theme }) => theme.color.salmao};;
         font-size: 13px;
+        font-weight: bold;
     }
 `;
 

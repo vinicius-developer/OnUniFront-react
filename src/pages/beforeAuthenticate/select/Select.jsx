@@ -2,8 +2,8 @@ import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
 /* DEFAULT */
-import Header from '../default/Header'
-import Footer from '../default/Footer'
+import Header from '../../default/Header'
+import Footer from '../../default/Footer'
 
 /* CSS */
 
@@ -47,23 +47,22 @@ const BoxOne = styled.section`
             border-radius: 0;
         }
     } 
-
 `
 
 function Select() {
     return (
         <Fragment>
-            <Header/>
+            <Header />
             <Wrapper>
                 <BoxOne>
                     <h1 className="pb-5 text-center px-3">Escolha seu tipo de usuário</h1>
                     <div>
-                        <Link to="/authenticate/cadastrar/ong">
+                        <Link to="/authenticate/register/ong">
                             <button className="my-2">
                                 Ong
                             </button>
                         </Link>
-                        <Link to="/authenticate/cadastrar/doador">
+                        <Link to="/authenticate/register/donor">
                             <button className="my-2">
                                 Doador
                             </button>
@@ -71,7 +70,7 @@ function Select() {
                     </div>
                 </BoxOne>
             </Wrapper>
-            <Footer/>
+            <Footer />
         </Fragment>
     )
 }

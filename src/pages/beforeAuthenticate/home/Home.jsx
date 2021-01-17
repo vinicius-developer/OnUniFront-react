@@ -1,8 +1,8 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-scroll'
-//import { Link } from 'react-router-dom'
-import Header from '../default/Header'
-import Footer from '../default/Footer'
+import { Link as ScrollLink} from 'react-scroll'
+import { Link } from 'react-router-dom'
+import Header from '../../default/Header'
+import Footer from '../../default/Footer'
 
 /* BOX-ONE */
 import pothoBoxOne from './images/box-one/imagemTresPessoas.svg'
@@ -357,7 +357,20 @@ class App extends Component {
 	render() {
 		return (
 			<Fragment>
-				<Header firstPage={'first'} itensCad={['Entrar', 'Cadastrar']} itensNav={['O Projeto', 'Causas', 'Artigos',]} />
+				<Header 
+				firstPage={'first'} 
+				itensNav={['O Projeto', 'Causas', 'Artigos']}
+				itensCad={[
+					{
+						path: 'authenticate/login',
+						label: 'Entrar'
+					}, 
+					{
+						path: 'authenticate/register',
+						label: 'Cadastrar'
+					}
+				]}  
+				/>
 				<Wrapper className="d-flex flex-column align-items-center">
 					<BoxOne id="first" className="d-flex flex-column align-items-center">
 						<h1 className="mt-3">
@@ -506,27 +519,27 @@ class App extends Component {
 						<button className="hidden-modal"> X </button>
 						<ul className="mt-5">
 							<li>
-								<Link className='hidden-modal' to={'oprojeto'} spy={true} smooth={true} duration={500}>
+								<ScrollLink className='hidden-modal' to={'oprojeto'} spy={true} smooth={true} duration={500}>
 									O Projeto
-								</Link>
+								</ScrollLink>
 							</li>
 							<li>
-								<Link className="hidden-modal" to={'causas'} spy={true} smooth={true} duration={500}>
+								<ScrollLink className="hidden-modal" to={'causas'} spy={true} smooth={true} duration={500}>
 									Causas
-								</Link>
+								</ScrollLink>
 							</li>
 							<li>
-								<Link className="hidden-modal" to={'artigos'} spy={true} smooth={true} duration={500}>
+								<ScrollLink className="hidden-modal" to={'artigos'} spy={true} smooth={true} duration={500}>
 									Artigos
-								</Link>
+								</ScrollLink>
 							</li>
 						</ul>
 						<ul className="list-menu-smartphone mt-3 text-white">
 							<li>
-								<a>Entrar</a>
+								<Link to="authenticate/entrar">Entrar</Link>
 							</li>
 							<li>
-								<a>Cadastrar</a>
+								<Link to="authenticate/cadastrar">Cadastrar</Link>
 							</li>
 						</ul>
 					</aside>

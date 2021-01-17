@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 /* IMG */
-import logo from '../../../imagesDefault/logo/logo.svg';
+import logo from '../../imagesDefault/logo/logo.svg';
 
 /* CSS */
 const FooterComponent = styled.footer`

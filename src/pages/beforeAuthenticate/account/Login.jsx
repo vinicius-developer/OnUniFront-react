@@ -49,7 +49,6 @@ export default class Login extends Component {
         }
 
         async function send(body, header, global) {
-            console.log(body);
             if (body.userkey.length === 14) {
                 await axiosPost('http://127.0.0.1:8000/api/doador/auth/login', body, header, global, 'doador')
             } else if (body.userkey.length === 18) {
@@ -67,12 +66,10 @@ export default class Login extends Component {
         function axiosPost(url, body, header, global, type) {
             return axios.post(url, body, header)
                 .then(response => {
-                    console.log(response)
                     localStorage.setItem('token', response.data.access_token)
-                    type === 'ong' ? global.setState({ loggedOng: true }) : global.setState({ loggedDonor: true })
+                    type === 'ong' ? global.setState({ loggedDonor: true }) : global.setState({ loggedOng: true })
                 })
                 .catch(error => {
-                    console.log(error.response)
                     clear()
                     showMessageError(error.response.data.errors)
                 })
@@ -105,9 +102,9 @@ export default class Login extends Component {
 
     render() {
         if (this.state.loggedOng) {
-            return <Redirect push to="/" />
+            return <Redirect push to="/donors/home" />
         } else if (this.state.loggedDonor) {
-            return <Redirect push to="/" />
+            return <Redirect push to="/ongs/home" />
         } else {
             return (
                 <Fragment>

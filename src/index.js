@@ -5,12 +5,21 @@ import { ThemeProvider } from 'styled-components';
 import Theme from './styles/theme';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+/* Before Authenticate */
+
 import Home from './pages/beforeAuthenticate/home/Home';
 import Select from './pages/beforeAuthenticate/select/Select';
 import RegisterOng from './pages/beforeAuthenticate/account/Ong';
 import RegisterDoador from './pages/beforeAuthenticate/account/Donor';
 import Login from './pages/beforeAuthenticate/account/Login'
 
+/* After Authenticate */ 
+
+/* Donor */
+import HomeDonor from './pages/afterAuthenticate/donors/home/Home'
+
+/* Ong */
+import HomeOng from './pages/afterAuthenticate/ongs/home/Home'
 
 ReactDOM.render(
   <ThemeProvider theme={Theme}>
@@ -18,10 +27,15 @@ ReactDOM.render(
       <GlobalStyle />
       <Switch>
         <Route path="/" component={Home} exact />
-        <Route path="/authenticate/cadastrar" component={Select} exact/>
-        <Route path="/authenticate/cadastrar/ong" component={RegisterOng} />
-        <Route path="/authenticate/cadastrar/doador" component={RegisterDoador} />
-        <Route path="/authenticate/entrar" component={Login}/>
+        <Route path="/authenticate/register" component={Select} exact/>
+        <Route path="/authenticate/register/ong" component={RegisterOng} />
+        <Route path="/authenticate/register/donor" component={RegisterDoador} />
+        <Route path="/authenticate/login" component={Login}/>
+
+        <Route path="/donors/home" component={HomeDonor} exact/>
+
+        <Route path="/ongs/home" component={HomeOng} exact/>
+
         <Route path="*" component={() => <div>Essa página não existe</div>}/>
       </Switch>
     </BrowserRouter>
