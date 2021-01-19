@@ -88,11 +88,10 @@ export default class Login extends Component {
 
         function clear() {
             const prefix = ["userkey", "password"]
-
-            for (let i = 0; i < prefix.length; i++) {
-                const element = document.getElementById(prefix[i]).nextElementSibling.firstChild
+            prefix.map(val => {
+                const element = document.getElementById(val).nextElementSibling.firstChild
                 if (element != null) element.remove()
-            }
+            })
         }
 
         send(this.state.form, header, this)

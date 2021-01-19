@@ -16,7 +16,7 @@ import Login from './pages/beforeAuthenticate/account/Login'
 /* After Authenticate */ 
 
 /* Donor */
-import HomeDonor from './pages/afterAuthenticate/donors/home/Home'
+import HomeDonor from './pages/afterAuthenticate/donors/home/HomeDonor'
 
 /* Ong */
 import HomeOng from './pages/afterAuthenticate/ongs/home/Home'

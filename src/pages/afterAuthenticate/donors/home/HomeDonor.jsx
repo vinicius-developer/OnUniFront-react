@@ -5,6 +5,7 @@ import styled from 'styled-components'
 /* Components */
 import Header from '../../../default/Header'
 import Footer from '../../../default/Footer'
+import ModalSmartphoneComponent from '../../../default/ModalSmartphone'
 
 /* CSS */
 
@@ -16,6 +17,7 @@ const Wrapper = styled.section`
     h1 {
         font-family: ${({ theme }) => theme.font.roboto};
         color: #5f5f5f;
+        ${({ theme }) => theme.media('472px', ['font-size: 30px'])}
     }
 
     article {
@@ -24,18 +26,60 @@ const Wrapper = styled.section`
         box-shadow: 5px 3px 22px 0px rgba(49, 50, 50, 0.36) ;
         margin: 0 0 60px 0;
 
+        ${({ theme }) => {
+        return theme.media('1000px', [
+            'width: 472px;',
+            'height: 619px;',
+            'flex-direction: row;',
+            'flex-wrap: wrap;'
+        ])}}
+
+        ${({ theme }) => theme.media('472px', ['width: 372px'])}
+
+        ${({ theme }) => theme.media('372px', ['width: 272px'])}
+
         div {
             width: 50%;
             height: 100%;
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            flex-direction: column;
+
+            ${({ theme }) => theme.media('1000px', [
+                'width: 100%;', 
+                'height: 50%;',
+                'justify-content: start;',
+                'align-items: start;',
+                'margin-top: 2em;',
+                'text-align: left'])}
+
 
             h1{
                 font-size: 50px;
+
+
+                ${({ theme }) => theme.media('472px', ['font-size: 30px'])}
+            }
+
+            p {
+                padding-left: 1.5em;
+                ${({theme}) => theme.media('1000px', ['padding: 0'])} 
+
+                ${({ theme }) => theme.media('472px', ['font-size: 13px'])}
+            }
+
+            h5 {
+                ${({ theme }) => theme.media('472px', ['font-size: 20px'])}
             }
 
             p,h1,h5 {
                 font-weight: bold;
                 color:  #343a40
             }
+
+            
 
             button {
                 color: #343a40;
@@ -64,6 +108,16 @@ const Frame = styled.div`
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
+    margin-right: 1.5rem;
+
+    ${({ theme }) => {
+        return theme.media('1000px', [
+                'margin-right: 0;',
+                'width: 100% !important;',
+                'margin-top: 0 !important'
+            ])}
+    }
+    
 `
 
 const ButtonPaginate = styled.button`
@@ -106,10 +160,18 @@ export default class HomeDonor extends Component {
             .catch(error => {
 
             })
+
+        const modalMenuSmartPhone = document.querySelectorAll('.hidden-modal')
+
+        for (let i = 0; i < modalMenuSmartPhone.length; i++) {
+            modalMenuSmartPhone[i].addEventListener('click', e => this.switchModal(e))
+        }
+
     }
 
     request(e, page) {
         e.preventDefault()
+        window.scrollTo(0, 0)
         const headers = this.state.token
         axios.get(`http://127.0.0.1:8000/api/info/users/ong/list?page=${page}`, { headers })
             .then(response => {
@@ -122,15 +184,20 @@ export default class HomeDonor extends Component {
             .catch(error => {
 
             })
+    }
 
+    switchModal(e) {
+        const modal = document.getElementById('modalMenuSmartphone')
+
+        if (modal.classList.contains('d-none')) {
+            modal.classList.remove('d-none')
+        } else {
+            modal.classList.add('d-none')
+        }
     }
 
     cutText(text) {
         return text.split(' ').slice(0, 15).join(' ') + '...'
-    }
-
-    moveScroll() {
-        window.scrollTo(0, 0)
     }
 
     render() {
@@ -161,19 +228,17 @@ export default class HomeDonor extends Component {
 
                     {this.state.ongs.map((val, ind) => {
                         return (
-                            <article key={ind} className="d-flex  p-3">
-                                <Frame style={{ backgroundImage: `url('http://127.0.0.1:8000/storage/${val.img}')` }} className="mr-4" />
-                                <div className="text-right d-flex flex-column justify-content-end align-items-end">
-                                    <p>{val.id}</p>
+                            <article key={ind} className="d-flex p-3">
+                                <Frame style={{ backgroundImage: `url('http://127.0.0.1:8000/storage/${val.img}')` }} />
+                                <div >
                                     <h5 className="mb-4">{val.nomeCausaSocial}</h5>
                                     <h1 className="mb-4">{val.nomeFantasia}</h1>
-                                    <p className="pl-5 mb-3">{this.cutText(val.descricao)}</p>
+                                    <p className="mb-3">{this.cutText(val.descricao)}</p>
                                     <button className="mb-5">Saber Mais</button>
                                 </div>
                             </article>
                         )
                     })}
-                    {this.state.last_page}
                     <div>
                         {this.state.page > 1 &&
                             <ButtonPaginate onClick={e => this.request(e, parseInt(this.state.page) - 1)}> &lt; </ButtonPaginate>
@@ -184,6 +249,22 @@ export default class HomeDonor extends Component {
                     </div>
                 </Wrapper>
                 <Footer />
+                <ModalSmartphoneComponent itensNav="" itensCad={
+                    [
+                        {
+                            path: "/",
+                            label: "Ajuda"
+                        },
+                        {
+                            path: "/",
+                            label: "Meu Perfil"
+                        },
+                        {
+                            path: "/",
+                            label: "Sair"
+                        }
+                    ]
+                } />
             </Fragment>
         )
     }

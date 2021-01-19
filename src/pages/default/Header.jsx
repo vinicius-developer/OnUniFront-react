@@ -81,7 +81,7 @@ function Header(props) {
 				<HeaderComponent>
 					<BoxInfoHeader className="d-flex justify-content-between align-items-center">
 						<BoxImg>
-							<ScrollLink className="pe-auto" to={props.firstPage} spy={true} smooth={true} duration={500}>
+							<ScrollLink className="pe-auto ml-2" to={props.firstPage} spy={true} smooth={true} duration={500}>
 								<img src={logo} alt="logo da OnUni" />
 							</ScrollLink>
 						</BoxImg>
@@ -124,7 +124,7 @@ function Header(props) {
 							}
 						</BoxButtons>
 						<MenuSmartphone>
-							<button className="hidden-modal">
+							<button className="hidden-modal mr-3">
 								<img src={menu} alt="três linhas na vertical para representar menu" />
 							</button>
 						</MenuSmartphone>

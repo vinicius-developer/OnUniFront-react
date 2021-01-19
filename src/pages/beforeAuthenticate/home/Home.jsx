@@ -1,8 +1,7 @@
 import React, { Fragment, Component } from 'react';
-import { Link as ScrollLink} from 'react-scroll'
-import { Link } from 'react-router-dom'
 import Header from '../../default/Header'
 import Footer from '../../default/Footer'
+import styled from 'styled-components';
 
 /* BOX-ONE */
 import pothoBoxOne from './images/box-one/imagemTresPessoas.svg'
@@ -30,8 +29,10 @@ import estudantesPA from './images/box-five/estudantesPa.jpg'
 import noticiasVans from './images/box-five/vansTenis.jpg'
 import programaContraFome from './images/box-five/programaContraFome.jpg'
 
+/* MODALSMARTPHONE */
+import ModalSmartphoneComponent from '../../default/ModalSmartphone'
+
 /* CSS */
-import styled, { keyframes } from 'styled-components';
 
 const boxSize = '981px';
 const colorBackgroudBox = '#fdecec';
@@ -252,76 +253,6 @@ const CardBoxFive = styled.article`
 	}
 `;
 
-/* KEYFRAMES */
-
-const showMenuSmartphone = keyframes`
-	from {
-		width: 0;
-	}
-	to {
-		width: 200px;
-	}
-`;
-
-const buttonsMenuSmartphone = keyframes`
-	from {
-		visibility: hidden;
-	}
-	75% {
-		visibility: hidden;
-		color: ${({ theme }) => theme.color.lima};
-	}
-	to {
-		color: #ffffff;
-	}
-`
-const ModalSmartphone = styled.div`
-	position: fixed;
-	z-index: 2;
-	top: 0;
-	width: 100vw;
-	height: 100vh;
-	background-color: rgba(0,0,0, .5);
-
-	aside {
-		position: absolute;
-		left: 0;
-		width: 200px;
-		height: 100vh;
-		background-color: ${({ theme }) => theme.color.lima};
-		animation-name: ${showMenuSmartphone};
-		animation-duration: .5s;
-	}
-
-	aside button {
-		position: absolute;
-		right: 15px;
-		top: 5px;
-		cursor: pointer;
-		background-color: ${({ theme }) => theme.color.lima};
-		border: none; 
-		color: #ffffff;
-	}
-
-	aside ul {
-		width: 70%;
-		color: #ffffff;
-	}
-
-	aside ul li {
-		margin: 20px 0;
-		animation-name: ${buttonsMenuSmartphone};
-		animation-duration: .5s;
-		visibility: visible
-	}
-
-	aside ul li a {
-		text-decoration: underline
-	}
-
-
-`
-
 class App extends Component {
 	constructor(props) {
 		super(props)
@@ -514,36 +445,19 @@ class App extends Component {
 					</BoxFive>
 				</Wrapper>
 				<Footer />
-				<ModalSmartphone id="modalMenuSmartphone" className='d-none'>
-					<aside className="d-flex align-items-center flex-column">
-						<button className="hidden-modal"> X </button>
-						<ul className="mt-5">
-							<li>
-								<ScrollLink className='hidden-modal' to={'oprojeto'} spy={true} smooth={true} duration={500}>
-									O Projeto
-								</ScrollLink>
-							</li>
-							<li>
-								<ScrollLink className="hidden-modal" to={'causas'} spy={true} smooth={true} duration={500}>
-									Causas
-								</ScrollLink>
-							</li>
-							<li>
-								<ScrollLink className="hidden-modal" to={'artigos'} spy={true} smooth={true} duration={500}>
-									Artigos
-								</ScrollLink>
-							</li>
-						</ul>
-						<ul className="list-menu-smartphone mt-3 text-white">
-							<li>
-								<Link to="authenticate/entrar">Entrar</Link>
-							</li>
-							<li>
-								<Link to="authenticate/cadastrar">Cadastrar</Link>
-							</li>
-						</ul>
-					</aside>
-				</ModalSmartphone>
+				<ModalSmartphoneComponent 
+				itensNav={['O Projeto', 'Causas', 'Artigos']} 
+				itensCad={[
+					{
+						path: '/authenticate/login',
+						label: 'Entrar', 
+					},
+					{	
+						path: '/authenticate/register',
+						label: 'Cadastrar'
+					}
+					]} />
+				
 			</Fragment>
 		);
 	}
