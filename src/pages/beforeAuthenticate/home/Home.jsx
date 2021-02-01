@@ -289,7 +289,12 @@ class App extends Component {
 		return (
 			<Fragment>
 				<Header 
-				firstPage={'first'} 
+				firstPage={
+					{
+						action: 'stay',
+						path: 'first'
+					}
+				} 
 				itensNav={['O Projeto', 'Causas', 'Artigos']}
 				itensCad={[
 					{

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -17,6 +18,7 @@ const Wrapper = styled.section`
     h1 {
         font-family: ${({ theme }) => theme.font.roboto};
         color: #5f5f5f;
+        font-weight: 100;
         ${({ theme }) => theme.media('472px', ['font-size: 30px'])}
     }
 
@@ -32,7 +34,8 @@ const Wrapper = styled.section`
             'height: 619px;',
             'flex-direction: row;',
             'flex-wrap: wrap;'
-        ])}}
+        ])
+    }}
 
         ${({ theme }) => theme.media('472px', ['width: 372px'])}
 
@@ -47,13 +50,14 @@ const Wrapper = styled.section`
             align-items: flex-end;
             flex-direction: column;
 
-            ${({ theme }) => theme.media('1000px', [
-                'width: 100%;', 
-                'height: 50%;',
-                'justify-content: start;',
-                'align-items: start;',
-                'margin-top: 2em;',
-                'text-align: left'])}
+            ${({ theme }) => theme.media('1000px',[
+            'width: 100%;',
+            'height: 50%;',
+            'justify-content: start;',
+            'align-items: start;',
+            'margin-top: 2em;',
+            'text-align: left'
+        ])}
 
 
             h1{
@@ -65,7 +69,7 @@ const Wrapper = styled.section`
 
             p {
                 padding-left: 1.5em;
-                ${({theme}) => theme.media('1000px', ['padding: 0'])} 
+                ${({ theme }) => theme.media('1000px', ['padding: 0'])} 
 
                 ${({ theme }) => theme.media('472px', ['font-size: 13px'])}
             }
@@ -75,7 +79,6 @@ const Wrapper = styled.section`
             }
 
             p,h1,h5 {
-                font-weight: bold;
                 color:  #343a40
             }
 
@@ -112,10 +115,11 @@ const Frame = styled.div`
 
     ${({ theme }) => {
         return theme.media('1000px', [
-                'margin-right: 0;',
-                'width: 100% !important;',
-                'margin-top: 0 !important'
-            ])}
+            'margin-right: 0;',
+            'width: 100% !important;',
+            'margin-top: 0 !important'
+        ])
+    }
     }
     
 `
@@ -140,6 +144,7 @@ export default class HomeDonor extends Component {
             ongs: [],
             page: '',
             last_page: '',
+            redirect_path: '',
             token: {
                 'Authorization': `Bearer ${localStorage.token}`
             }
@@ -158,7 +163,10 @@ export default class HomeDonor extends Component {
                 })
             })
             .catch(error => {
-
+                localStorage.removeItem('token')
+                this.setState({
+                    redirect_path: '/authenticate/login'
+                })
             })
 
         const modalMenuSmartPhone = document.querySelectorAll('.hidden-modal')
@@ -167,6 +175,22 @@ export default class HomeDonor extends Component {
             modalMenuSmartPhone[i].addEventListener('click', e => this.switchModal(e))
         }
 
+    }
+
+    componentWillUnmount() {
+        const modalMenuSmartPhone = document.querySelectorAll('.hidden-modal')
+        for (let i = 0; i < modalMenuSmartPhone.length; i++) {
+            modalMenuSmartPhone[i].removeEventListener('click', e => this.switchModal(e))
+        }
+        this.setState({
+            ongs: [],
+            page: '',
+            last_page: '',
+            redirect_path: '',
+            token: {
+                'Authorization': `Bearer ${localStorage.token}`
+            }
+        })
     }
 
     request(e, page) {
@@ -182,7 +206,10 @@ export default class HomeDonor extends Component {
                 })
             })
             .catch(error => {
-
+                localStorage.removeItem('token')
+                this.setState({
+                    redirect_path: '/authenticate/login'
+                })
             })
     }
 
@@ -201,71 +228,81 @@ export default class HomeDonor extends Component {
     }
 
     render() {
-        return (
-            <Fragment>
-                <Header
-                    firstPage=""
-                    itensNav={['']}
-                    itensCad={
-                        [
+        if (this.state.redirect_path === '') {
+            return (
+                <Fragment>
+                    <Header
+                        firstPage={
                             {
-                                path: "/",
-                                label: "Ajuda"
-                            },
-                            {
-                                path: "/",
-                                label: "Meu Perfil"
-                            },
-                            {
-                                path: "/",
-                                label: "Sair"
+                                action: 'redirect'
                             }
-                        ]
-                    }
-                />
-                <Wrapper className="d-flex align-items-center flex-column">
-                    <h1 className="py-4 m-0">Escolha uma ONG</h1>
+                        }
+                        itensNav={['']}
+                        itensCad={
+                            [
+                                {
+                                    path: "/donors/help",
+                                    label: "Ajuda"
+                                },
+                                {
+                                    path: "/donors/me",
+                                    label: "Meu Perfil"
+                                },
+                                {
+                                    path: "/authenticate/logout",
+                                    label: "Sair"
+                                }
+                            ]
+                        }
+                    />
+                    <Wrapper className="d-flex align-items-center flex-column">
+                        <h1 className="py-4 m-0">Escolha uma ONG</h1>
 
-                    {this.state.ongs.map((val, ind) => {
-                        return (
-                            <article key={ind} className="d-flex p-3">
-                                <Frame style={{ backgroundImage: `url('http://127.0.0.1:8000/storage/${val.img}')` }} />
-                                <div >
-                                    <h5 className="mb-4">{val.nomeCausaSocial}</h5>
-                                    <h1 className="mb-4">{val.nomeFantasia}</h1>
-                                    <p className="mb-3">{this.cutText(val.descricao)}</p>
-                                    <button className="mb-5">Saber Mais</button>
-                                </div>
-                            </article>
-                        )
-                    })}
-                    <div>
-                        {this.state.page > 1 &&
-                            <ButtonPaginate onClick={e => this.request(e, parseInt(this.state.page) - 1)}> &lt; </ButtonPaginate>
-                        }
-                        {this.state.page < this.state.last_page &&
-                            <ButtonPaginate onClick={e => this.request(e, parseInt(this.state.page) + 1)}> &gt; </ButtonPaginate>
-                        }
-                    </div>
-                </Wrapper>
-                <Footer />
-                <ModalSmartphoneComponent itensNav="" itensCad={
-                    [
-                        {
-                            path: "/",
-                            label: "Ajuda"
-                        },
-                        {
-                            path: "/",
-                            label: "Meu Perfil"
-                        },
-                        {
-                            path: "/",
-                            label: "Sair"
-                        }
-                    ]
-                } />
-            </Fragment>
-        )
+                        {this.state.ongs.map((val, ind) => {
+                            return (
+                                <article key={ind} className="d-flex p-3">
+                                    <Frame style={{ backgroundImage: `url('http://127.0.0.1:8000/storage/${val.img}')` }} />
+                                    <div >
+                                        <h5 className="mb-4">{val.nomeCausaSocial}</h5>
+                                        <h1 className="mb-4">{val.nomeFantasia}</h1>
+                                        <p className="mb-3">{this.cutText(val.descricao)}</p>
+                                        <button className="mb-5">Saber Mais</button>
+                                    </div>
+                                </article>
+                            )
+                        })}
+                        <div>
+                            {this.state.page > 1 &&
+                                <ButtonPaginate onClick={e => this.request(e, parseInt(this.state.page) - 1)}> &lt; </ButtonPaginate>
+                            }
+                            {this.state.page < this.state.last_page &&
+                                <ButtonPaginate onClick={e => this.request(e, parseInt(this.state.page) + 1)}> &gt; </ButtonPaginate>
+                            }
+                        </div>
+                    </Wrapper>
+                    <Footer />
+                    <ModalSmartphoneComponent
+                        itensNav=""
+                        itensCad={
+                            [
+                                {
+                                    path: "/",
+                                    label: "Ajuda"
+                                },
+                                {
+                                    path: "/",
+                                    label: "Meu Perfil"
+                                },
+                                {
+                                    path: "/authenticate/logout",
+                                    label: "Sair"
+                                }
+                            ]
+                        } />
+                </Fragment>
+            )
+        } else {
+            return <Redirect to={this.state.redirect_path}> </Redirect>
+        }
     }
 }

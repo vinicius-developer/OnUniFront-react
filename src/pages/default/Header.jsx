@@ -81,9 +81,15 @@ function Header(props) {
 				<HeaderComponent>
 					<BoxInfoHeader className="d-flex justify-content-between align-items-center">
 						<BoxImg>
-							<ScrollLink className="pe-auto ml-2" to={props.firstPage} spy={true} smooth={true} duration={500}>
-								<img src={logo} alt="logo da OnUni" />
-							</ScrollLink>
+							{props.firstPage.action === 'redirect' ?
+								<Link to={props.firstPage.path}>
+									<img src={logo} alt="logo da OnUni" />
+								</Link>
+								:
+								<ScrollLink className="pe-auto ml-2" to={props.firstPage.path} spy={true} smooth={true} duration={500}>
+									<img src={logo} alt="logo da OnUni" />
+								</ScrollLink>
+							}
 						</BoxImg>
 						<BoxButtons>
 							{props.itensNav !== '' &&
