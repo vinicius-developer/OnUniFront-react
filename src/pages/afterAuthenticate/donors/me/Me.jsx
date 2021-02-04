@@ -19,6 +19,10 @@ const BoxOne = styled.div`
     width: 1000px;
     height: 600px;
 
+    header {
+        width: 100%
+    }
+
     nav {
         background-color: ${({ theme }) => theme.color.salmao};
         height: 50px;
@@ -36,10 +40,15 @@ const BoxOne = styled.div`
             }
         }
     }
+`
 
-    header {
-        width: 100%
-    }
+const BoxPhoto = styled.div`
+    width: 220px;
+    height: 227px;
+    border-radius: 150px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
 `
 
 
@@ -47,6 +56,7 @@ export default class Me extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            me: {},
             redirect_path: '',
             token: {
                 'Authorization': `Bearer ${localStorage.token}`
@@ -57,8 +67,11 @@ export default class Me extends Component {
     componentDidMount() {
         const headers = this.state.token
         axios.get('http://127.0.0.1:8000/api/doador/auth/me', { headers })
-            .then(response => {
-                console.log(response)
+            .then(({ data }) => {
+                this.setState({
+                    me: data
+                })
+                console.log(this.state.me)
             })
             .catch(error => {
                 localStorage.removeItem('token')
@@ -108,13 +121,18 @@ export default class Me extends Component {
                                     </ul>
                                 </nav>
                             </header>
+                            <div id="content" className="mt-5">
+                                <BoxPhoto className="d-flex flex-column align-items-center"
+                                    style={{ backgroundImage: `url(http://127.0.0.1:8000/storage/${this.state.me.img_perfil})` }}>
+                                </BoxPhoto>
+                            </div>
                         </BoxOne>
                     </Wrapper>
                     <Footer />
                 </Fragment>
             )
         } else {
-            return <Redirect to={this.state.redirect_path} /> 
-        } 
+            return <Redirect to={this.state.redirect_path} />
+        }
     }
 }

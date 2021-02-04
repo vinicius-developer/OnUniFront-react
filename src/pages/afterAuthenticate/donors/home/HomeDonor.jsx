@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -82,9 +82,7 @@ const Wrapper = styled.section`
                 color:  #343a40
             }
 
-            
-
-            button {
+            a {
                 color: #343a40;
                 background-color: transparent;
                 background-image: none;
@@ -93,9 +91,11 @@ const Wrapper = styled.section`
                 width: 150px;
                 font-weight: bold;
                 border-radius: 5px;
-
+                
+                
                 &:hover{
                     background-color: #343a40;
+                    text-decoration: none;
                     transition: .5s;
                     color: #ffffff
                 }
@@ -200,6 +200,7 @@ export default class HomeDonor extends Component {
         axios.get(`http://127.0.0.1:8000/api/info/users/ong/list?page=${page}`, { headers })
             .then(response => {
                 const page = response.data.current_page
+                console.log(response.data)
                 this.setState({
                     ongs: response.data.data,
                     page: page,
@@ -266,7 +267,8 @@ export default class HomeDonor extends Component {
                                         <h5 className="mb-4">{val.nomeCausaSocial}</h5>
                                         <h1 className="mb-4">{val.nomeFantasia}</h1>
                                         <p className="mb-3">{this.cutText(val.descricao)}</p>
-                                        <button className="mb-5">Saber Mais</button>
+                                        <Link className="mb-5 d-flex justify-content-center align-items-center"
+                                        to={`/donors/moreinfo/${val.id}`}>Saber Mais</Link>
                                     </div>
                                 </article>
                             )

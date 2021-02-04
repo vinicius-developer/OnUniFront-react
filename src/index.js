@@ -21,6 +21,7 @@ import Logout from './pages/afterAuthenticate/logout/Logout'
 import HomeDonor from './pages/afterAuthenticate/donors/home/HomeDonor'
 import Help from './pages/afterAuthenticate/donors/help/Help'
 import Me from './pages/afterAuthenticate/donors/me/Me'
+import MoreInfo from './pages/afterAuthenticate/donors/moreInfo/MoreInfo' 
 
 /* Ong */
 import HomeOng from './pages/afterAuthenticate/ongs/home/Home'
@@ -41,6 +42,7 @@ ReactDOM.render(
         <Route path="/donors/home" component={HomeDonor} exact />
         <Route path="/donors/help" component={Help} />
         <Route path="/donors/me" component={Me} />
+        <Route path="/donors/moreinfo/:id" component={MoreInfo} />
 
         <Route path="/ongs/home" component={HomeOng} exact />
 
