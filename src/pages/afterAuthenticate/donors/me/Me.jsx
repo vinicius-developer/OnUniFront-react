@@ -38,7 +38,18 @@ const BoxOne = styled.div`
                     text-decoration: underline;
                 }
             }
+
+            button {
+                border: none;
+                background-color: inherit;
+            }
         }
+    }
+
+    #content {
+        width: 100%;
+        height: 100%;
+
     }
 `
 
@@ -57,7 +68,9 @@ export default class Me extends Component {
         super(props)
         this.state = {
             me: {},
+            fav: {},
             redirect_path: '',
+            display: true,
             token: {
                 'Authorization': `Bearer ${localStorage.token}`
             }
@@ -65,21 +78,29 @@ export default class Me extends Component {
     }
 
     componentDidMount() {
-        const headers = this.state.token
-        axios.get('http://127.0.0.1:8000/api/doador/auth/me', { headers })
-            .then(({ data }) => {
-                this.setState({
-                    me: data
-                })
-                console.log(this.state.me)
-            })
-            .catch(error => {
-                localStorage.removeItem('token')
-                this.setState({
-                    redirect_path: '/authenticate/login'
-                })
-            })
+        this.getInfoMe()
+    }
 
+    async getInfoMe() {
+        const headers = this.state.token
+        await axios.get('http://127.0.0.1:8000/api/doador/auth/me', { headers })
+         .then(({ data }) => {
+             this.setState({
+                 me: data,
+                 display: true 
+             })
+         })
+         .catch(error => {
+             localStorage.removeItem('token')
+             this.setState({
+                 redirect_path: '/authenticate/login'
+             })
+         })
+    }
+
+    async getInfoFav() {
+        const headers = this.state.token
+        await axios.get('127.0.0.1:8000/api/doador/auth')
     }
 
     render() {
@@ -116,16 +137,25 @@ export default class Me extends Component {
                             <header className="d-flex justify-content-center">
                                 <nav className="text-white font-weight-bold d-flex align-items-center justify-content-center">
                                     <ul className="d-flex">
-                                        <li className="text-center">Informações</li>
-                                        <li className="text-center">Ongs Favoritas</li>
+                                        <li onClick={() => this.getInfoMe()} className="text-center">Informações</li>
+                                        <li onClick={() => this.getInfoFav()} id="onfav" className="text-center">Ongs Favoritas</li>
                                     </ul>
                                 </nav>
                             </header>
-                            <div id="content" className="mt-5">
-                                <BoxPhoto className="d-flex flex-column align-items-center"
-                                    style={{ backgroundImage: `url(http://127.0.0.1:8000/storage/${this.state.me.img_perfil})` }}>
-                                </BoxPhoto>
-                            </div>
+                            {this.state.display ?
+                                <div id="content" className="mt-5 d-flex flex-column align-items-center">
+                                    <BoxPhoto className="d-flex flex-column align-items-center"
+                                        style={{ backgroundImage: `url(http://127.0.0.1:8000/storage/${this.state.me.img_perfil})` }}>
+                                    </BoxPhoto>
+                                    <h2 className="my-4 text-white font-weight-bold fs-1"
+                                    >{this.state.me.nome + ' ' + this.state.me.sobrenome}</h2>
+                                    <h5 className="text-white font-weight-bold">E-mail: {this.state.me.email}</h5>
+                                    <h5 className="text-white font-weight-bold">CPF: {this.state.me.cpf}</h5>
+                                </div>
+                            :
+                                <div id="content">
+                                </div>
+                            }
                         </BoxOne>
                     </Wrapper>
                     <Footer />
