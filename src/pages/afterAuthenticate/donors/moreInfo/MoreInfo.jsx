@@ -1,10 +1,12 @@
-import React, { Component, Fragment, Redirect } from 'react'
+import React, { Component, Fragment } from 'react'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 
 /* COMPONENTS */
 import Header from '../../../default/Header'
 import Footer from '../../../default/Footer'
+import ReportModal from './modal/ReportModal'
 
 /* IMAGES */
 import Balao from '../../img/balao-de-coracao.svg'
@@ -37,7 +39,7 @@ const Frame = styled.div`
         position: absolute;
         background-color: ${({ theme }) => theme.color.lima};
         padding: 20px;
-        z-index: 2;
+        z-index: 0;
         bottom: 50px;
         right: -110px;
         max-width: 400px;
@@ -79,19 +81,20 @@ export default class moreInfo extends Component {
             ong: {},
             listItens: {},
             fav: false,
-            report: false
+            report: false,
+            switchModalReport: false
         }
     }
 
     componentDidMount() {
-        this.getInfoOng()
-        this.getInfoList()
-        this.getInfoFav()
-        this.getInfoReport()
+        const headers = this.state.token
+        this.getInfoOng(headers)
+        this.getInfoList(headers)
+        this.getInfoFav(headers)
+        this.getInfoReport(headers)
     }
 
-    async getInfoOng() {
-        const headers = this.state.token
+    async getInfoOng(headers) {
         await axios.get(`http://127.0.0.1:8000/api/info/users/ong/find/${this.state.id}`, { headers })
             .then(({ data }) => {
                 this.setState({
@@ -99,15 +102,11 @@ export default class moreInfo extends Component {
                 })
             })
             .catch(err => {
-                this.setState({
-                    redirect: true,
-                    path: "/authenticate/logout"
-                })
+                this.redirectDonorsHome()
             })
     }
 
-    async getInfoList() {
-        const headers = this.state.token
+    async getInfoList(headers) {
         await axios.get(`http://127.0.0.1:8000/api/info/objects/list/${this.state.id}`, { headers })
             .then(({ data }) => {
                 this.setState({
@@ -118,15 +117,11 @@ export default class moreInfo extends Component {
                 })
             })
             .catch(err => {
-                this.setState({
-                    redirect: true,
-                    path: "/donors/home"
-                })
+                this.redirectDonorsHome()
             })
     }
 
-    async getInfoFav() {
-        const headers = this.state.token
+    async getInfoFav(headers) {
         await axios.get(`http://127.0.0.1:8000/api/actions/follow/find/${this.state.id}`, { headers })
             .then(({ data }) => {
                 this.setState({
@@ -134,15 +129,11 @@ export default class moreInfo extends Component {
                 })
             })
             .catch(err => {
-                this.setState({
-                    redirect: true,
-                    path: "/donors/home"
-                })
+                this.redirectDonorsHome()
             })
     }
 
-    async getInfoReport() {
-        const headers = this.state.token
+    async getInfoReport(headers) {
         await axios.get(`http://127.0.0.1:8000/api/actions/report/findong/${this.state.id}`, { headers })
             .then(({ data }) => {
                 this.setState({
@@ -150,17 +141,33 @@ export default class moreInfo extends Component {
                 })
             })
             .catch(err => {
-                this.setState({
-                    redirect: true,
-                    path: "/donors/home"
-                })
-
+                this.redirectDonorsHome()
             })
     }
 
-    async setReport() {
+    async switchFav() {
         const headers = this.state.token
-        //await axios.put(`http://127.0.0.1:8000/api/actions/report/reg`)
+        await axios.put(`http://127.0.0.1:8000/api/actions/follow/switch/${this.state.id}`, {}, { headers })
+            .then(({ data }) => {
+                this.setState({
+                    fav: data.exists
+                })
+            })
+            .catch(err => {
+                this.redirectDonorsHome()
+            })
+    }
+
+    switchModalReport() {
+        !this.state.switchModalReport ? this.setState({ switchModalReport: true }) : this.setState({ switchModalReport: false }) 
+        console.log(this.state.switchModalReport)
+    }
+
+    redirectDonorsHome() {
+        this.setState({
+            redirect: true,
+            path: "/donors/home"
+        })
     }
 
     render() {
@@ -192,24 +199,28 @@ export default class moreInfo extends Component {
                             ]
                         } />
                     <Wrapper className="d-flex flex-column align-items-center">
-                        <BoxOne >
+                        <BoxOne>
                             <Frame style={this.state.ong.img ? { backgroundImage: `url(http://127.0.0.1:8000/storage/${this.state.ong.img})` } : { backgroundImage: '' }}>
                                 <div className="d-flex align-items-center justify-content-center">
                                     <h1 className="text-white font-weigth-bold">{this.state.ong.nomeFantasia}</h1>
                                 </div>
                             </Frame>
                             <BoxActions>
-                                <button style={this.state.fav ? {backgroundImage: `url(${BalaoPreenchido})`} : {backgroundImage: `url(${Balao})`}}></button>
-                                <button style={this.state.report ? {backgroundImage: `url(${AdendoPreenchido})`} : {backgroundImage: `url(${Adendo})`}}></button>
+                                <button 
+                                onClick={() => this.switchFav()} 
+                                style={this.state.fav ? { backgroundImage: `url(${BalaoPreenchido})` } : { backgroundImage: `url(${Balao})` }}></button>
+                                <button onClick={() => this.switchModalReport()} 
+                                style={this.state.report ? { backgroundImage: `url(${AdendoPreenchido})` } : { backgroundImage: `url(${Adendo})` }}></button>
                             </BoxActions>
                         </BoxOne>
-
                     </Wrapper>
                     <Footer />
+                    <ReportModal visibility={this.state.switchModalReport}/>
                 </Fragment>
             )
+
         } else {
-            <Redirect to={this.state.path} />
+            return <Redirect to={this.state.path}></Redirect>
         }
     }
 

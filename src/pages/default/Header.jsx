@@ -12,8 +12,7 @@ const HeaderComponent = styled.header`
     position: fixed;
     height: 100px;
 	width: 100%;
-    z-index: 2;
-    box-shadow:         5px 3px 22px 0px rgba(49, 50, 50, 0.36);
+    box-shadow: 5px 3px 22px 0px rgba(49, 50, 50, 0.36);
 	z-index: 1;	
 `;
 
